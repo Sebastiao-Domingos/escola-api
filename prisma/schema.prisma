@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Pais {
+  id  String @unique @default(uuid()) @db.VarChar(36)
+  nome String @unique
+  provincias Provincia[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Provincia {
+  id String @unique @default(uuid()) @db.VarChar(36)
+  pais_id String @db.VarChar(36)
+  nome String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  municipios Municipio[]
+  pais Pais @relation(fields: [pais_id] , references: [id] , onDelete: Cascade , onUpdate: Cascade)
+}
+
+model Municipio {
+  id String @unique @default(uuid()) @db.VarChar(36)
+  provincia_id String @db.VarChar(36)
+  nome String
+  enderecos Endereco[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  provincia Provincia @relation(fields: [provincia_id] , references: [id], onDelete:  Cascade , onUpdate: Cascade)
+}
+
+model Endereco {
+  id String @unique @default(uuid()) @db.VarChar(36)
+  municipio_id String @db.VarChar(36)
+  estudante_id String
+  distrito String
+  rua String 
+  ponto_de_referencia String
+  municipio Municipio @relation(fields: [municipio_id] , references: [id], onDelete: Cascade , onUpdate: Cascade)
+  estudante Estudante @relation(fields: [estudante_id],references: [id] , onDelete:  Cascade , onUpdate: Cascade)
+}
+
+model Estudante {
+  id String @unique @default(uuid()) @db.VarChar(36)
+  numero_processo Int @unique @default(autoincrement())
+  nome String
+  data_nascimento DateTime
+  naturalidade Naturalidade?
+  turma_id String? @db.VarChar(36)
+  endereco Endereco[]
+  contatos Contato[]
+  createAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())
+  turma Turma? @relation(fields: [turma_id] ,references: [id] , onDelete: Cascade , onUpdate: Cascade)
+}
+model Naturalidade {
+  id String @unique @default(uuid()) @db.VarChar(36)
+  naturalidade String
+  municipio_id String
+  estudante Estudante @relation(fields: [estudante_id] , references: [id])
+  estudante_id String @unique @db.VarChar(36)
+}
+
+model Contato {
+  id String @default(uuid()) @unique @db.VarChar(36)
+  nome String
+  valor String @unique
+  estudante_id String @db.VarChar(36)
+  createAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())
+  estudante Estudante @relation(fields: [estudante_id] , references: [id], onDelete: Cascade , onUpdate:  Cascade)
+}
+
+model Turma {
+  id String @unique @default(uuid()) @db.VarChar(36)
+  nome String @unique
+  ano_academico_id String @db.VarChar(36)
+  estudantes Estudante[]
+  ano_academico Ano_academico @relation(fields: [ano_academico_id] , references: [id] , onDelete: Cascade , onUpdate: Cascade)
+}
+
+model Ano_academico {
+  id String @unique @default(uuid()) @db.VarChar(36)
+  valor Int @unique
+  turmas Turma[]
+  createAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())
+}

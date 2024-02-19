@@ -1,0 +1,2411 @@
+{
+    "openapi": "3.1.0",
+    "info":{
+        "title" : "Api de Escola",
+        "description" :"Api para manipular uma escola",
+        "version": "2.0",
+        "contact" : {
+            "name" : "Sebastião Afonso Domingos",
+            "email" : "domingossebastiao380@gmail.com"
+        }
+    },
+
+    "servers" : [
+        {
+            "url" : "http://localhost:3333",
+            "description":"url base para manipular uma escola"
+        },
+        {
+            "url" : "http://localhost:3333",
+            "description":"url base para manipular uma escola"
+        }
+    ],
+    "tags" : [
+        {
+            "name" : "País",
+            "description" : "rota para manipular pais",
+            "summary" : "manipular pais!"
+        },
+        {
+            "name" : "Província",
+            "description" : "rota para manipular províncias",
+            "summary" : "manipular pais!"
+        },
+        {
+            "name" : "Município",
+            "description" : "rota para manipular municípios",
+            "summary" : "manipular pais!"
+        },
+        {
+            "name" : "Estudante",
+            "description" : "rota para manipular estudantes",
+            "summary" : "manipular pais!"
+        }
+    ],
+
+    "paths": {
+        "/paises":{
+            "post":{
+                "tags":["País"],
+                "summary":"Adicionar um pais",
+                "description":"Adicionar um novo pais",
+                "operationId":"adicionarPais",
+                "requestBody":{
+                    "description" :"Criar um novo pais",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/PaisCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Pais"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200" :{
+                        "description":"Pais criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Pais"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Pais"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "get":{
+                "tags" : ["País"],
+                "description" : "rota listar todos os países",
+                "summary" : "listar paises!",
+                "operationId":"listarPais",
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/Pais"
+                                    }
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/Pais"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar pais"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            }
+        },
+        "/paises/{pais_id}":{
+            "get":{
+                "tags":["País"],
+                "summary":"Pegar dos dados do pais pelo id",
+                "description":"Pegar dos dados do pais pelo id",
+                "operationId":"listarByIdPais",
+                "parameters":[
+                    {
+                        "name":"pais_id",
+                        "in":"path",
+                        "description":"id do pais",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/PaisDataResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Pais"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "put":{
+                "tags" : ["País"],
+                "description" : "rota atualizar o pais",
+                "summary" : "atualizar o pais!",
+                "operationId":"atualizarPais",
+                "parameters":[
+                    {
+                        "name":"pais_id",
+                        "in":"path",
+                        "description":"Id do pais",
+                        "required" : true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "description" :"Criar um novo pais",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/PaisCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Pais"
+                            }
+                        },
+                        "application/x-www-urlencoded":{
+                            "schema":{
+                                "$ref":"/components/schemas/Pais"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Pais"
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/Pais"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar pais"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["País"],
+                "summary":"Eliminar o pais pelo id",
+                "description":"Eliminar o pais pelo id",
+                "operationId":"eliminarByIdPais",
+                "parameters":[
+                    {
+                        "name":"pais_id",
+                        "in":"path",
+                        "description":"id do pais",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"Eliminado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Pais"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Pais"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
+        },
+        "/provincias":{
+            "post":{
+                "tags":["Província"],
+                "summary":"Adicionar província",
+                "description":"Adicionar província",
+                "operationId":"adicionarProvincia",
+                "requestBody":{
+                    "description" :"Criar uma província",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/ProvinciaCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Provincia"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200" :{
+                        "description":"criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Provincia"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Provincia"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "get":{
+                "tags" : ["Província"],
+                "description" : "rota listar todos as províncias",
+                "summary" : "listar paises!",
+                "operationId":"listarProvincia",
+                "parameters":[
+                    {
+                        "in":"query",
+                        "name":"pais_id",
+                        "description":"Id do Pais",
+                        "schema":{
+                            "type":"string",
+                            "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"currentPage",
+                        "description":"pagina atual",
+                        "schema":{
+                            "type":"integer",
+                            "example":1
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"perPage",
+                        "schema":{
+                            "type":"integer",
+                            "example":5
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/ProvinciaResponse"
+                                    }
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/ProvinciaResponse"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar provincias"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            }
+        },
+        "/provincias/{provincia_id}":{
+            "get":{
+                "tags":["Província"],
+                "summary":"Pegar dos dados do provincia pelo id",
+                "description":"Pegar dos dados do provincia pelo id",
+                "operationId":"listarByIdProvincia",
+                "parameters":[
+                    {
+                        "name":"provincia_id",
+                        "in":"path",
+                        "description":"id do provincia",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ProvinciaDateResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ProvinciaDateResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "put":{
+                "tags" : ["Província"],
+                "description" : "rota atualizar a província",
+                "summary" : "atualizar a província!",
+                "operationId":"atualizarProvincia",
+                "parameters":[
+                    {
+                        "name":"provincia_id",
+                        "in":"path",
+                        "description":"Id do província",
+                        "required" : true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "description" :"Criar uma nova província",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/ProvinciaCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Provincia"
+                            }
+                        },
+                        "application/x-www-urlencoded":{
+                            "schema":{
+                                "$ref":"/components/schemas/Provincia"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Provincia"
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/Provincia"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar províncias"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Província"],
+                "summary":"Eliminar a província pelo id",
+                "description":"Eliminar a província pelo id",
+                "operationId":"eliminarByIdProvincia",
+                "parameters":[
+                    {
+                        "name":"provincia_id",
+                        "in":"path",
+                        "description":"id da província",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"Eliminado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Provincia"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Provincia"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
+        },
+        "/municipios":{
+            "post":{
+                "tags":["Município"],
+                "summary":"Adicionar município",
+                "description":"Adicionar município",
+                "operationId":"adicionarMunicipio",
+                "requestBody":{
+                    "description" :"Criar uma município",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/MunicipioCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Municipio"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200" :{
+                        "description":"criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Municipio"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "get":{
+                "tags" : ["Município"],
+                "description" : "rota listar todos as municípios",
+                "summary" : "listar municípios!",
+                "operationId":"listarMunicipio",
+                "parameters":[
+                    {
+                        "in":"query",
+                        "name":"pais_id",
+                        "description":"Id do Pais",
+                        "schema":{
+                            "type":"string",
+                            "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"nome_pais",
+                        "description":"Nome do Pais",
+                        "schema":{
+                            "type":"string",
+                            "example":"Angola"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"provincia_id",
+                        "description":"Id da província",
+                        "schema":{
+                            "type":"string",
+                            "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"nome_provincia",
+                        "description":"Nome do Província",
+                        "schema":{
+                            "type":"string",
+                            "example":"Luanda"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"currentPage",
+                        "description":"pagina atual",
+                        "schema":{
+                            "type":"integer",
+                            "example":1
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"perPage",
+                        "schema":{
+                            "type":"integer",
+                            "example":5
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/MunicipioResponse"
+                                    }
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/MunicipioResponse"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar municípios"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            }
+        },
+        "/municipios/{municipio_id}":{
+            "get":{
+                "tags":["Município"],
+                "summary":"Pegar dos dados do município pelo id",
+                "description":"Pegar dos dados do município pelo id",
+                "operationId":"listarByIdMunicipio",
+                "parameters":[
+                    {
+                        "name":"municipio_id",
+                        "in":"path",
+                        "description":"id do provincia",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/MunicipioDataResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/MunicipioDataResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "put":{
+                "tags" : ["Município"],
+                "description" : "rota atualizar a município",
+                "summary" : "atualizar a município",
+                "operationId":"atualizarMunicipio",
+                "parameters":[
+                    {
+                        "name":"municipio_id",
+                        "in":"path",
+                        "description":"Id do município",
+                        "required" : true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "description" :"Atualizar  município",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/MunicipioCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Municipio"
+                            }
+                        },
+                        "application/x-www-urlencoded":{
+                            "schema":{
+                                "$ref":"/components/schemas/Municipio"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200":{
+                        "description":"atualizado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Municipio"
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/Municipio"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao atualizar município"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Município"],
+                "summary":"Eliminar a município pelo id",
+                "description":"Eliminar a município pelo id",
+                "operationId":"eliminarByIdMunicipio",
+                "parameters":[
+                    {
+                        "name":"municipio_id",
+                        "in":"path",
+                        "description":"id da município",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"Eliminado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Municipio"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
+        },
+        "/ano_academico":{
+            "post":{
+                "tags":["Ano Académico"],
+                "summary":"Adicionar um ano academíco",
+                "description":"Adicionar um novo ano academíco",
+                "operationId":"adicionarAno",
+                "requestBody":{
+                    "description" :"Criar um novo ano academíco",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/AnoAcademicoCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/AnoAcademico"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200" :{
+                        "description":"criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/AnoAcademico"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/AnoAcademico"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "get":{
+                "tags" : ["Ano Académico"],
+                "description" : "rota listar todos os anos académicos",
+                "summary" : "listar anos academicos!",
+                "operationId":"listarAno",
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/AnoAcademico"
+                                    }
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/AnoAcademico"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            }
+        },
+        "/ano_academico/{ano_id}":{
+            "get":{
+                "tags":["País"],
+                "summary":"Pegar dos dados do ano académico pelo id",
+                "description":"Pegar dos dados do ano académico pelo id",
+                "operationId":"listarByIdAno",
+                "parameters":[
+                    {
+                        "name":"ano_id",
+                        "in":"path",
+                        "description":"id do ano académico",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/AnoAcademicoDataResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/AnoAcademico"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "put":{
+                "tags" : ["Ano Académico"],
+                "description" : "rota atualizar o ano académico",
+                "summary" : "atualizar o ano académico!",
+                "operationId":"atualizarAno",
+                "parameters":[
+                    {
+                        "name":"ano_id",
+                        "in":"path",
+                        "description":"id do ano académico",
+                        "required" : true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "description" :"atualizar ano académico",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/AnoAcademicoCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/AnoAcademico"
+                            }
+                        },
+                        "application/x-www-urlencoded":{
+                            "schema":{
+                                "$ref":"#/components/schemas/AnoAcademico"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/AnoAcademico"
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/AnoAcademico"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar pais"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Ano Académico"],
+                "summary":"Eliminar o ano académico pelo id",
+                "description":"Eliminar o ano académico pelo id",
+                "operationId":"eliminarByIdAno",
+                "parameters":[
+                    {
+                        "name":"ano_id",
+                        "in":"path",
+                        "description":"id do ano académico",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"Eliminado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/AnoAcademico"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/AnoAcademico"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
+        },
+        "/turmas":{
+            "post":{
+                "tags":["Turma"],
+                "summary":"Adicionar turma",
+                "description":"Adicionar turma",
+                "operationId":"adicionarTurma",
+                "requestBody":{
+                    "description" :"Criar turma",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/TurmaCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Turma"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200" :{
+                        "description":"criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Turma"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Turma"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "get":{
+                "tags" : ["Turma"],
+                "description" : "rota listar todas turmas",
+                "summary" : "listar turmas",
+                "operationId":"listarTurma",
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/Turma"
+                                    }
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/Turma"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            }
+        },
+        "/turmas/{turma_id}":{
+            "get":{
+                "tags":["Turma"],
+                "summary":"Pegar dos dados do turma pelo id",
+                "description":"Pegar dos dados do turma pelo id",
+                "operationId":"listarByIdTurma",
+                "parameters":[
+                    {
+                        "name":"turma_id",
+                        "in":"path",
+                        "description":"id do turma",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/TurmaDataResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Turma"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "put":{
+                "tags" : ["Turma"],
+                "description" : "rota atualizar o turma",
+                "summary" : "atualizar o turma!",
+                "operationId":"atualizarAno",
+                "parameters":[
+                    {
+                        "name":"turma_id",
+                        "in":"path",
+                        "description":"id do turma",
+                        "required" : true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "description" :"atualizar ano académico",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/AnoAcademicoCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/AnoAcademico"
+                            }
+                        },
+                        "application/x-www-urlencoded":{
+                            "schema":{
+                                "$ref":"#/components/schemas/AnoAcademico"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/AnoAcademico"
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/AnoAcademico"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar pais"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Turma"],
+                "summary":"Eliminar o turma pelo id",
+                "description":"Eliminar o turma pelo id",
+                "operationId":"eliminarByIdTurma",
+                "parameters":[
+                    {
+                        "name":"turma_id",
+                        "in":"path",
+                        "description":"id do turma",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"Eliminado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Turma"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Turma"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
+        },
+        "/estudantes":{
+            "post":{
+                "tags":["Estudante"],
+                "summary":"Adicionar estudante",
+                "description":"Adicionar estudante",
+                "operationId":"adicionarEstudante",
+                "requestBody":{
+                    "description" :"Criar uma estudante",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/MunicipioCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Municipio"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200" :{
+                        "description":"criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Municipio"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "get":{
+                "tags" : ["Estudante"],
+                "description" : "rota listar todos as estudantes",
+                "summary" : "listar estudantes!",
+                "operationId":"listarEstudante",
+                "parameters":[
+                    {
+                        "in":"query",
+                        "name":"pais_id",
+                        "description":"Id do Pais",
+                        "schema":{
+                            "type":"string",
+                            "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"nome_pais",
+                        "description":"Nome do Pais",
+                        "schema":{
+                            "type":"string",
+                            "example":"Angola"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"provincia_id",
+                        "description":"Id da província",
+                        "schema":{
+                            "type":"string",
+                            "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"nome_provincia",
+                        "description":"Nome do Província",
+                        "schema":{
+                            "type":"string",
+                            "example":"Luanda"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"currentPage",
+                        "description":"pagina atual",
+                        "schema":{
+                            "type":"integer",
+                            "example":1
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"perPage",
+                        "schema":{
+                            "type":"integer",
+                            "example":5
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/MunicipioResponse"
+                                    }
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/MunicipioResponse"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar estudantes"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            }
+        },
+        "/estudantes/{estudante_id}":{
+            "get":{
+                "tags":["Estudante"],
+                "summary":"Pegar dos dados do estudante pelo id",
+                "description":"Pegar dos dados do estudante pelo id",
+                "operationId":"listarByIdEstudante",
+                "parameters":[
+                    {
+                        "name":"estudante_id",
+                        "in":"path",
+                        "description":"id do estudante",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/MunicipioDataResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/MunicipioDataResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "put":{
+                "tags" : ["Estudante"],
+                "description" : "rota atualizar a estudante",
+                "summary" : "atualizar a estudante",
+                "operationId":"atualizarEstudante",
+                "parameters":[
+                    {
+                        "name":"estudante_id",
+                        "in":"path",
+                        "description":"Id do estudante",
+                        "required" : true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "description" :"Atualizar  estudante",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/MunicipioCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Municipio"
+                            }
+                        },
+                        "application/x-www-urlencoded":{
+                            "schema":{
+                                "$ref":"/components/schemas/Municipio"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200":{
+                        "description":"atualizado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Municipio"
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/Municipio"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao atualizar município"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Estudante"],
+                "summary":"Eliminar a estudante pelo id",
+                "description":"Eliminar a estudante pelo id",
+                "operationId":"eliminarByIdEstudante",
+                "parameters":[
+                    {
+                        "name":"estudante_id",
+                        "in":"path",
+                        "description":"id da estudante",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"Eliminado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Municipio"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
+        }
+
+    },
+
+    "components" : {
+        "schemas":{
+            "Pais":{
+                "required":[
+                    "nome"
+                ],
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "PaisDataResponse":{
+                "required":[
+                    "nome"
+                ],
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "createdAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "provincias":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/ProvinciaDateResponse"
+                        }
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "PaisCreate":{
+                "required":[
+                    "nome"
+                ],
+                "type" : "object",
+                "properties":{
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                }
+            },
+            "Provincia":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Luanda"
+                    },
+                    "pasi_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "nome": "Luanda",
+                    "pais_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "ProvinciaPais":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Luanda"
+                    },
+                    "pasi_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "pais":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/Pais" 
+                    }
+                },
+                "xml" : {
+                    "nome": "Luanda",
+                    "pais_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "ProvinciaCreate":{
+                "required":[
+                    "nome",
+                    "pais_id"
+                ],
+                "type" : "object",
+                "properties":{
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Luanda"
+                    },
+                    "pais_id":{
+                        "type":"string",
+                        "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda",
+                    "pais_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                }
+            },
+            "ProvinciaResponse":{
+                "required":[
+                    "nome",
+                    "pais_id"
+                ],
+                "type" : "object",
+                "properties":{
+                    "provincias":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Provincia"
+                        }
+                    },
+                    "perPage":{
+                        "type":"integer",
+                        "example":4
+                    },
+                    "previousPage":{
+                        "type":"integer",
+                        "example":1
+                    },
+                    "currentPage": {
+                        "type":"integer",
+                        "example":1
+                    },
+                    "nextPage":{
+                        "type":"integer",
+                        "example":1
+                    },
+                    "lastPage": {
+                        "type":"integer",
+                        "example":4
+                    },
+                    "total": {
+                        "type":"integer",
+                        "example":7
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda",
+                    "pais_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                }
+            },
+            "ProvinciaDataResponse":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "pais_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "createdAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "municipios":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Municipio"
+                        }
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "Municipio":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Luanda"
+                    },
+                    "provincia_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "nome": "Luanda",
+                    "provincia_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "MunicipioCreate":{
+                "required":[
+                    "nome",
+                    "provincia_id"
+                ],
+                "type" : "object",
+                "properties":{
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Luanda"
+                    },
+                    "provincia_id":{
+                        "type":"string",
+                        "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda",
+                    "provincia_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                }
+            },
+            "MunicipioResponse":{
+                "type" : "object",
+                "properties":{
+                    "municipios":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Municipio"
+                        }
+                    },
+                    "perPage":{
+                        "type":"integer",
+                        "example":4
+                    },
+                    "previousPage":{
+                        "type":"integer",
+                        "example":1
+                    },
+                    "currentPage": {
+                        "type":"integer",
+                        "example":1
+                    },
+                    "nextPage":{
+                        "type":"integer",
+                        "example":1
+                    },
+                    "lastPage": {
+                        "type":"integer",
+                        "example":4
+                    },
+                    "total": {
+                        "type":"integer",
+                        "example":7
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda",
+                    "pais_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                }
+            },
+            "MunicipioDataResponse":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "provincia_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "createdAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "provincia":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/ProvinciaPais"
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "Estudante":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Luanda"
+                    },
+                    "provincia_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "nome": "Luanda",
+                    "provincia_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "EstudanteCreate":{
+                "required":[
+                    "nome",
+                    "provincia_id"
+                ],
+                "type" : "object",
+                "properties":{
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Luanda"
+                    },
+                    "provincia_id":{
+                        "type":"string",
+                        "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda",
+                    "provincia_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                }
+            },
+            "EstudanteResponse":{
+                "type" : "object",
+                "properties":{
+                    "municipios":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Municipio"
+                        }
+                    },
+                    "perPage":{
+                        "type":"integer",
+                        "example":4
+                    },
+                    "previousPage":{
+                        "type":"integer",
+                        "example":1
+                    },
+                    "currentPage": {
+                        "type":"integer",
+                        "example":1
+                    },
+                    "nextPage":{
+                        "type":"integer",
+                        "example":1
+                    },
+                    "lastPage": {
+                        "type":"integer",
+                        "example":4
+                    },
+                    "total": {
+                        "type":"integer",
+                        "example":7
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda",
+                    "pais_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                }
+            },
+            "EstudanteDataResponse":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "provincia_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "createdAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "provincia":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/ProvinciaPais"
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "AnoAcademico":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "valor":{
+                        "type" : "integer",
+                        "example" : 3
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "valor":1
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "AnoAcademicoDataResponse":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "valor":{
+                        "type" : "integer",
+                        "example" :2
+                    },
+                    "createdAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "turmas":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Turma"
+                        }
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "AnoAcademicoCreate":{
+                "required":[
+                    "valor"
+                ],
+                "type" : "object",
+                "properties":{
+                    "valor":{
+                        "type" : "integer",
+                        "example" :1
+                    }
+                },
+                "xml" : {
+                    "valor": 2
+                }
+            },
+            "Turma":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "ano_academico_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "nome": "EDT-5"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "TurmaDataResponse":{
+                "required":[
+                    "nome"
+                ],
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "ano_academico_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "createdAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "estudantes":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/ProvinciaDateResponse"
+                        }
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "TurmaCreate":{
+                "required":[
+                    "nome","ano_academico_id"
+                ],
+                "type" : "object",
+                "properties":{
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "ano_academico_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                }
+            }
+        },
+        "requestBodies":{
+            "Pais" :{
+                "description" :"Objecto pais para ser adicionado",
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "$ref":"/components/schemas/Pais"
+                        }
+                    },
+                    "application/hml":{
+                        "schema":{
+                            "$ref":"/components/schemas/Pais"
+                        }
+                    }
+                }
+            },
+            "Provincia" :{
+                "description" :"Objecto provincia para ser adicionado",
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "$ref":"/components/schemas/Provincia"
+                        }
+                    },
+                    "application/hml":{
+                        "schema":{
+                            "$ref":"/components/schemas/Provincia"
+                        }
+                    }
+                }
+            },
+            "Municipio" :{
+                "description" :"Objecto municpio para ser adicionado",
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "$ref":"#/components/schemas/MunicipioCreate"
+                        }
+                    },
+                    "application/hml":{
+                        "schema":{
+                            "$ref":"#/components/schemas/MunicipioCreate"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
