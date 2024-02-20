@@ -1121,7 +1121,7 @@
                 "tags" : ["Turma"],
                 "description" : "rota atualizar o turma",
                 "summary" : "atualizar o turma!",
-                "operationId":"atualizarAno",
+                "operationId":"atualizarTurma",
                 "parameters":[
                     {
                         "name":"turma_id",
@@ -1138,17 +1138,17 @@
                     "content":{
                         "application/json" :{
                             "schema" : {
-                                "$ref":"#/components/schemas/AnoAcademicoCreate"
+                                "$ref":"#/components/schemas/TurmaCreate"
                             }
                         },
                         "application/hml":{
                             "schema":{
-                                "$ref":"#/components/schemas/AnoAcademico"
+                                "$ref":"#/components/schemas/Turma"
                             }
                         },
                         "application/x-www-urlencoded":{
                             "schema":{
-                                "$ref":"#/components/schemas/AnoAcademico"
+                                "$ref":"#/components/schemas/Turma"
                             }
                         }
                     },
@@ -1160,11 +1160,11 @@
                         "content":{
                             "application/json":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/AnoAcademico"
+                                    "$ref":"#/components/schemas/Turma"
                                 }
                             },
                             "application/hml":{
-                                "$ref":"#/components/schemas/AnoAcademico"
+                                "$ref":"#/components/schemas/Turma"
                             }
                         }
                     },
@@ -1228,12 +1228,12 @@
                     "content":{
                         "application/json" :{
                             "schema" : {
-                                "$ref":"#/components/schemas/MunicipioCreate"
+                                "$ref":"#/components/schemas/EstudanteCreate"
                             }
                         },
                         "application/hml":{
                             "schema":{
-                                "$ref":"#/components/schemas/Municipio"
+                                "$ref":"#/components/schemas/Estudante"
                             }
                         }
                     },
@@ -1245,12 +1245,12 @@
                         "content":{
                             "application/json":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/Municipio"
+                                    "$ref":"#/components/schemas/Estudante"
                                 }
                             },
                             "application/hml":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/Municipio"
+                                    "$ref":"#/components/schemas/Estudante"
                                 }
                             }
                         }
@@ -1331,12 +1331,12 @@
                                 "schema":{
                                     "type":"array",
                                     "items":{
-                                        "$ref":"#/components/schemas/MunicipioResponse"
+                                        "$ref":"#/components/schemas/EstudanteResponse"
                                     }
                                 }
                             },
                             "application/hml":{
-                                "$ref":"#/components/schemas/MunicipioResponse"
+                                "$ref":"#/components/schemas/EstudanteResponse"
                             }
                         }
                     },
@@ -1411,17 +1411,17 @@
                     "content":{
                         "application/json" :{
                             "schema" : {
-                                "$ref":"#/components/schemas/MunicipioCreate"
+                                "$ref":"#/components/schemas/EstudanteCreate"
                             }
                         },
                         "application/hml":{
                             "schema":{
-                                "$ref":"#/components/schemas/Municipio"
+                                "$ref":"#/components/schemas/Estudante"
                             }
                         },
                         "application/x-www-urlencoded":{
                             "schema":{
-                                "$ref":"/components/schemas/Municipio"
+                                "$ref":"/components/schemas/Estudante"
                             }
                         }
                     },
@@ -1433,11 +1433,11 @@
                         "content":{
                             "application/json":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/Municipio"
+                                    "$ref":"#/components/schemas/Estudante"
                                 }
                             },
                             "application/hml":{
-                                "$ref":"#/components/schemas/Municipio"
+                                "$ref":"#/components/schemas/Estudante"
                             }
                         }
                     },
@@ -1471,12 +1471,12 @@
                         "content":{
                             "application/json":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/Municipio"
+                                    "$ref":"#/components/schemas/Estudante"
                                 }
                             },
                             "application/hml":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/Municipio"
+                                    "$ref":"#/components/schemas/Estudante"
                                 }
                             }
                         }
@@ -1988,10 +1988,19 @@
                         "type" : "string",
                         "example" : "Luanda"
                     },
-                    "provincia_id":{
+                    "nemero_processo":{
+                        "type" : "integer",
+                        "example" : 333
+                    },
+                    "turma_id":{
                         "type" : "string",
                         "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
                     },
+                    "naturalidade" :{
+                        "type":"object",
+                        "$ref":"#/components/schemas/Naturalidade"
+                    }
+                    ,
                     "createdAt":{
                         "type":"Date",
                         "example":"2024-02-17T13:35:33.795Z"
@@ -2027,7 +2036,8 @@
             "EstudanteCreate":{
                 "required":[
                     "nome",
-                    "provincia_id"
+                    "turma_id",
+                    "naturalidade"
                 ],
                 "type" : "object",
                 "properties":{
@@ -2035,9 +2045,17 @@
                         "type" : "string",
                         "example" : "Luanda"
                     },
-                    "provincia_id":{
+                    "ano_nascimento" : {
+                        "type" : "Date"
+                    }
+                    ,
+                    "turma_id":{
                         "type":"string",
                         "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "naturalidade":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/NaturalidadeCreate"
                     }
                 },
                 "xml" : {
@@ -2357,6 +2375,237 @@
                 },
                 "xml" : {
                     "name": "País"
+                }
+            },
+            "Naturalidade":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "naturalidade":{
+                        "type" : "string",
+                        "example" : "Luanda"
+                    },
+                    "numicipio_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "estudante_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "nome": "EDT-5"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "NaturalidadeCreate":{
+                "required":[
+                    "naturalidade","municipio_id","estudante_id"
+                ],
+                "type" : "object",
+                "properties":{
+                    "naturalidade":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "municipio_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "estudante_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda"
+                }
+            },
+            "Endereco":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "estudante_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "municipio_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "distrito":{
+                        "type" : "string",
+                        "example" : "Rangel"
+                    },
+                    "rua":{
+                        "type" : "string",
+                        "example" : "Brigada"
+                    },
+                    "ponto_de_referencia":{
+                        "type" : "string",
+                        "example" : "Brigada"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "nome": "EDT-5"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "EnderecoCreate":{
+                "required":[
+                    "distrito","municipio_id","rua", "ponto_de_referencia"
+                ],
+                "type" : "object",
+                "properties":{
+                    "municipio_id":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "distrito":{
+                        "type" : "string",
+                        "example" : "Rangel"
+                    },
+                    "rua":{
+                        "type" : "string",
+                        "example" : "Brigada"
+                    },
+                    "ponto_de_referencia":{
+                        "type" : "string",
+                        "example" : "Brigada"
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda"
+                }
+            },
+            "Contato":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Email"
+                    },
+                    "valor":{
+                        "type" : "string",
+                        "example" : "seba@gmail.com"
+                    },
+                    "estudante_id":{
+                        "type" : "string",
+                        "example" : "Brigada"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "nome": "EDT-5"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "ContatoCreate":{
+                "required":[
+                    "nome", "valor","estudante_id"
+                ],
+                "type" : "object",
+                "properties":{
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Email"
+                    },
+                    "valor":{
+                        "type" : "string",
+                        "example" : "seba@gmail.com"
+                    },
+                    "estudante_id":{
+                        "type" : "string",
+                        "example" : "Brigada"
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda"
                 }
             }
         },

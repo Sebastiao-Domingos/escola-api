@@ -45,6 +45,8 @@ model Endereco {
   distrito String
   rua String 
   ponto_de_referencia String
+  createAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())
   municipio Municipio @relation(fields: [municipio_id] , references: [id], onDelete: Cascade , onUpdate: Cascade)
   estudante Estudante @relation(fields: [estudante_id],references: [id] , onDelete:  Cascade , onUpdate: Cascade)
 }
@@ -54,8 +56,8 @@ model Estudante {
   numero_processo Int @unique @default(autoincrement())
   nome String
   data_nascimento DateTime
-  naturalidade Naturalidade?
   turma_id String? @db.VarChar(36)
+  naturalidade Naturalidade?
   endereco Endereco[]
   contatos Contato[]
   createAt DateTime @default(now()) 

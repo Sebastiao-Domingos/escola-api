@@ -53,14 +53,14 @@ export default class TurmaController{
     public async update( request : Request, response : Response) {
         const turma_id : string = request.params.id;
         const data : Partial<TurmaCreateData> = request.body;
-
+        
         if(!validate(turma_id)){
             return response.status(400).json( new BadRequestError("id inválido !"))
         }
 
-        const ano = await prisma.turma.findUnique( { where : {id : turma_id}}).then( res => res)
+        const turma = await prisma.turma.findUnique( { where : {id : turma_id}}).then( res => res)
 
-        if(!ano){
+        if(!turma){
             return response.status(400).json( new BadRequestError("Turma não encontrado!"))
         }
 

@@ -6,6 +6,7 @@ import { pais_routes } from "./localities/Pais.routes";
 import { provincia_routes } from "./localities/Provincia.routes";
 import { municipios_routes } from "./localities/Municipio.routes";
 import { anoAcademico_routes } from "./school/AnoAcademico.routes";
+import { turma_routes } from "./school/Turma.routes";
 
 const routes = express();
 
@@ -19,5 +20,6 @@ routes.use(pais_routes)
 routes.use(provincia_routes)
 routes.use(municipios_routes)
 routes.use(anoAcademico_routes)
+routes.use(turma_routes)
 export {routes};
 
