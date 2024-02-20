@@ -85,6 +85,8 @@ model Contato {
 model Turma {
   id String @unique @default(uuid()) @db.VarChar(36)
   nome String @unique
+  curso String @default("Informática")
+  turno String @default("Manhã")
   ano_academico_id String @db.VarChar(36)
   estudantes Estudante[]
   ano_academico Ano_academico @relation(fields: [ano_academico_id] , references: [id] , onDelete: Cascade , onUpdate: Cascade)
