@@ -1996,6 +1996,18 @@
                         "type" : "string",
                         "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
                     },
+                    "contatos":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Contato"
+                        }
+                    },
+                    "enderecos":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Endereco"
+                        }
+                    },
                     "naturalidade" :{
                         "type":"object",
                         "$ref":"#/components/schemas/Naturalidade"
@@ -2043,20 +2055,34 @@
                 "properties":{
                     "nome":{
                         "type" : "string",
-                        "example" : "Luanda"
+                        "example" : "Sebastiao Antonio"
                     },
-                    "ano_nascimento" : {
-                        "type" : "Date"
+                    "data_nascimento" : {
+                        "type" : "Date",
+                        "example" :"2024-02-17T13:35:33.795Z"
                     }
                     ,
                     "turma_id":{
                         "type":"string",
                         "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
                     },
+                    "contatos":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/ContatoCreate"
+                        }
+                    },
                     "naturalidade":{
                         "type":"object",
                         "$ref":"#/components/schemas/NaturalidadeCreate"
+                    },
+                    "enderecos":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/EnderecoCreate"
+                        }
                     }
+
                 },
                 "xml" : {
                     "name": "Luanda",
@@ -2429,19 +2455,15 @@
             },
             "NaturalidadeCreate":{
                 "required":[
-                    "naturalidade","municipio_id","estudante_id"
+                    "naturalidade","municipio_id"
                 ],
                 "type" : "object",
                 "properties":{
                     "naturalidade":{
                         "type" : "string",
-                        "example" : "Angola"
+                        "example" : "Damba"
                     },
                     "municipio_id":{
-                        "type" : "string",
-                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
-                    },
-                    "estudante_id":{
                         "type" : "string",
                         "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
                     }
@@ -2516,7 +2538,7 @@
                 "properties":{
                     "municipio_id":{
                         "type" : "string",
-                        "example" : "Angola"
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
                     },
                     "distrito":{
                         "type" : "string",
@@ -2552,7 +2574,7 @@
                     },
                     "estudante_id":{
                         "type" : "string",
-                        "example" : "Brigada"
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
                     },
                     "createdAt":{
                         "type":"Date",
@@ -2587,7 +2609,7 @@
             },
             "ContatoCreate":{
                 "required":[
-                    "nome", "valor","estudante_id"
+                    "nome", "valor"
                 ],
                 "type" : "object",
                 "properties":{
@@ -2598,10 +2620,6 @@
                     "valor":{
                         "type" : "string",
                         "example" : "seba@gmail.com"
-                    },
-                    "estudante_id":{
-                        "type" : "string",
-                        "example" : "Brigada"
                     }
                 },
                 "xml" : {
