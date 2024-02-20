@@ -25,8 +25,18 @@ export default class TurmaController{
             response.status(400).json( new BadRequestError("Já existe turma com este nome"))
         }
 
-        if(!validate(data.ano_academico_id)){
-            response.status(400).json( new BadRequestError("Id do ano académico inválido"))
+        const curso= await prisma.curso.findUnique({
+            where : {
+                 id : data.curso_id
+            }
+        })
+
+        if( !curso ){
+            response.status(400).json( new BadRequestError("Curso invalido"))
+        }
+
+        if(!validate(data.ano_academico_id) || !validate(data.curso_id)){
+            response.status(400).json( new BadRequestError("Id inválido"))
         }
 
         const ano_academico= await prisma.ano_academico.findUnique({
@@ -68,7 +78,6 @@ export default class TurmaController{
             if(!validate(data.ano_academico_id)){
                 return response.status(400).json( new BadRequestError("id inválido !"))
             }
-
             const ano_academico= await prisma.ano_academico.findUnique({
                 where : {
                     id : data.ano_academico_id
@@ -77,6 +86,30 @@ export default class TurmaController{
     
             if( !ano_academico ){
                 response.status(400).json( new BadRequestError("Ano académico não encontrado"))
+            }
+
+            data.id = turma_id;
+            return await service.update(data)
+            .then( res => {
+                return response.status(200).json(res)
+            })
+            .catch( error => {
+                response.status(401).json( new NotfoundError(error))
+            })
+        }
+
+        if( data.curso_id ){
+            if(!validate(data.curso_id)){
+                return response.status(400).json( new BadRequestError("id inválido !"))
+            }
+            const ano_academico= await prisma.curso.findUnique({
+                where : {
+                    id : data.curso_id
+                }
+            })
+    
+            if( !ano_academico ){
+                response.status(400).json( new BadRequestError("Curso não encontrada"))
             }
 
             data.id = turma_id;

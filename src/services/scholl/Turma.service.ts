@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import TurmaRepository, { TurmaCreateData, TurmaData } from "../../Repositories/school/Turma.repositories";
 import { DeleteSms } from "../../Repositories/localiteis/Pais.repository";
+import { validate } from "uuid";
 
 const prisma = new PrismaClient();
 
@@ -12,6 +13,7 @@ export class TurmaService implements TurmaRepository{
         .then( response => response)
         .catch( error => error);
     };
+    
     public async update (data: Partial<TurmaCreateData>) : Promise<TurmaData>{
         const {id:_ , ...newData } = data;
         return await prisma.turma.update({

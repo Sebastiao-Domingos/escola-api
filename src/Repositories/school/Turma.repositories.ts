@@ -4,13 +4,17 @@ import { DeleteSms } from "../localiteis/Pais.repository";
 export type TurmaCreateData={
     id? : string
     nome : string
+    turno : string
     ano_academico_id: string
+    curso_id :string
 }
 
 export type TurmaData = {
     id : string
     nome : string
+    turno : string
     ano_academico_id: string
+    curso_id :string
     createdAt? : Date
     updaatedAt? :Date
     estudantes? : {

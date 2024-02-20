@@ -1489,6 +1489,224 @@
                     }
                 }
             }
+        },
+        "/cursos":{
+            "post":{
+                "tags":["Curso"],
+                "summary":"Adicionar um curso",
+                "description":"Adicionar um novo curso",
+                "operationId":"adicionarCurso",
+                "requestBody":{
+                    "description" :"Criar um novo curso",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/CursoCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Curso"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200" :{
+                        "description":"Pais criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Curso"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Curso"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "get":{
+                "tags" : ["Curso"],
+                "description" : "listar cursos",
+                "summary" : "listar cursos",
+                "operationId":"listarCurso",
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/Curso"
+                                    }
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/Curso"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar pais"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            }
+        },
+        "/cursos/{curso_id}":{
+            "get":{
+                "tags":["Curso"],
+                "summary":"Pegar dos dados do curso pelo id",
+                "description":"Pegar dos dados do curso pelo id",
+                "operationId":"listarByIdCurso",
+                "parameters":[
+                    {
+                        "name":"curso_id",
+                        "in":"path",
+                        "description":"id do curso",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/CursoDataResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/CursoDataResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "put":{
+                "tags" : ["Curso"],
+                "description" : "rota atualizar o curso",
+                "summary" : "atualizar o curso!",
+                "operationId":"atualizarcurso",
+                "parameters":[
+                    {
+                        "name":"curso_id",
+                        "in":"path",
+                        "description":"Id do curso",
+                        "required" : true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "description" :"Criar um novo curso",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/CursoCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/CursoCreate"
+                            }
+                        },
+                        "application/x-www-urlencoded":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Curso"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Curso"
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/Curso"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Curso"],
+                "summary":"Eliminar o curso pelo id",
+                "description":"Eliminar o curso pelo id",
+                "operationId":"eliminarByIdcurso",
+                "parameters":[
+                    {
+                        "name":"curso_id",
+                        "in":"path",
+                        "description":"id do curso",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"Eliminado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Curso"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Curso"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
         }
 
     },
@@ -2294,7 +2512,15 @@
                         "type" : "string",
                         "example" : "Angola"
                     },
+                    "turno":{
+                        "type" : "string",
+                        "example" : "Manhã"
+                    },
                     "ano_academico_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "curso_id":{
                         "type" : "string",
                         "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
                     },
@@ -2343,7 +2569,15 @@
                         "type" : "string",
                         "example" : "Angola"
                     },
+                    "turno":{
+                        "type" : "string",
+                        "example" : "Manhã"
+                    },
                     "ano_academico_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "curso_id":{
                         "type" : "string",
                         "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
                     },
@@ -2394,7 +2628,15 @@
                         "type" : "string",
                         "example" : "Angola"
                     },
+                    "turno":{
+                        "type" : "string",
+                        "example" : "Manhã"
+                    },
                     "ano_academico_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "curso_id":{
                         "type" : "string",
                         "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
                     }
@@ -2624,6 +2866,111 @@
                 },
                 "xml" : {
                     "name": "Luanda"
+                }
+            },
+            "Curso":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "CursoDataResponse":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Informática"
+                    },
+                    "createdAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "provincias":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/ProvinciaDateResponse"
+                        }
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "CursoCreate":{
+                "required":[
+                    "nome"
+                ],
+                "type" : "object",
+                "properties":{
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Informática"
+                    }
+                },
+                "xml" : {
+                    "name": "País"
                 }
             }
         },

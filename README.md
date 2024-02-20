@@ -34,7 +34,7 @@ Para carregar as tabelas ja existentes no base para o prisma
 ## npx prisma db pull
 
 instalar o cors do axios
-## $ npm 
+## $ npm cors
 
 
 instalar a tipagem do cors

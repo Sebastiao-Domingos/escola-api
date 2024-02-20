@@ -1,27 +1,30 @@
 import { Request, Response } from "express";
+import { PaisService } from "../../services/localities/Pais.service";
+import { PaisCreateData } from "../../Repositories/localiteis/Pais.repository";
 import { BadRequestError, NotfoundError } from "../../helpers/api-error";
 import { PrismaClient } from "@prisma/client";
 import { validate } from "uuid";
-import { AnoAcademicoService } from "../../services/scholl/Ano_academico.service";
-import { AnoCreateData } from "../../Repositories/school/Ano_academico.repositories";
+import { CursoService } from "../../services/scholl/Curso.service";
+import { CursoCreateData } from "../../Repositories/school/Curso.repository";
 
-const service = new AnoAcademicoService();
+const service = new CursoService();
 const prisma = new PrismaClient()
 
-export class AnoAcademicoController{
+export class CursoController{
     /**
      * create
      */
     public async create( request : Request, response : Response) {
-        const data : AnoCreateData = request.body;
+        const data : CursoCreateData = request.body;
 
-        const pais= await prisma.ano_academico.findUnique({
+        const curso= await prisma.curso.findUnique({
             where : {
-                valor : data.valor
+                nome : data.nome
             }
         })
-        if( pais ){
-            response.status(400).json( new BadRequestError("Já existe ano académico com este valor"))
+
+        if( curso ){
+            response.status(400).json( new BadRequestError("Já existe curso com este nome"))
         }
         await service.add(data)
         .then( res => {
@@ -35,20 +38,20 @@ export class AnoAcademicoController{
      * create
      */
     public async update( request : Request, response : Response) {
-        const ano_id : string = request.params.id;
-        const data : Partial<AnoCreateData> = request.body;
+        const curso_id : string = request.params.id;
+        const data : Partial<CursoCreateData> = request.body;
 
-        if(!validate(ano_id)){
-            return response.status(400).json( new BadRequestError("id inválido !"))
+        if(!validate(curso_id)){
+            return response.status(400).json( new BadRequestError("id inválido!"))
         }
 
-        const ano = await prisma.ano_academico.findUnique( { where : {id : ano_id}}).then( res => res)
+        const curso = await prisma.curso.findUnique( { where : {id : curso_id}}).then( res => res)
 
-        if(!ano){
-            return response.status(400).json( new BadRequestError("Ano académico não encontrado!"))
+        if(!curso){
+            return response.status(400).json( new BadRequestError("Curso não encontrado!"))
         }
 
-        data.id = ano_id;
+        data.id = curso_id;
         return await service.update(data)
         .then( res => {
             return response.status(200).json(res)
@@ -75,13 +78,13 @@ export class AnoAcademicoController{
      * find
      */
     public async find( request :Request , response : Response) {
-        const ano_id : string = request.params.id;
+        const curso_id : string = request.params.id;
 
-        if(!validate(ano_id)){
+        if(!validate(curso_id)){
             return response.status(404).json( new BadRequestError("id inválido !"))
         }
 
-        return await service.find(ano_id)
+        return await service.find(curso_id)
         .then( resp => {
             return response.status(200).json(resp)
         })
@@ -94,19 +97,19 @@ export class AnoAcademicoController{
      * delete
      */
     public async delete( request : Request , response :Response) {
-        const ano_id :string = request.params.id;
+        const curso_id :string = request.params.id;
         
-        if(!validate(ano_id)){
+        if(!validate(curso_id)){
             return response.status(400).json( new BadRequestError("id inválido !"))
         }
 
-        const pais = await prisma.ano_academico.findUnique( { where : {id : ano_id}}).then( res => res)
+        const pais = await prisma.curso.findUnique( { where : {id : curso_id}}).then( res => res)
 
         if(!pais){
-            return response.status(400).json( new BadRequestError("Ano académico não encontrado!"))
+            return response.status(400).json( new BadRequestError("Curso não encontrado!"))
         }
 
-        return await service.delete(ano_id)
+        return await service.delete(curso_id)
         .then( () => {
             response.status(200).json({sms : "Eliminado com susseco"});
         })
