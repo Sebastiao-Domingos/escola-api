@@ -1372,12 +1372,12 @@
                         "content":{
                             "application/json":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/MunicipioDataResponse"
+                                    "$ref":"#/components/schemas/EstudanteDataResponse"
                                 }
                             },
                             "application/hml":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/MunicipioDataResponse"
+                                    "$ref":"#/components/schemas/EstudanteDataResponse"
                                 }
                             }
                         }
@@ -2214,17 +2214,9 @@
                         "type" : "string",
                         "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
                     },
-                    "contatos":{
-                        "type":"array",
-                        "items":{
-                            "$ref":"#/components/schemas/Contato"
-                        }
-                    },
-                    "enderecos":{
-                        "type":"array",
-                        "items":{
-                            "$ref":"#/components/schemas/Endereco"
-                        }
+                    "turma":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/Turma"
                     },
                     "naturalidade" :{
                         "type":"object",
@@ -2267,7 +2259,9 @@
                 "required":[
                     "nome",
                     "turma_id",
-                    "naturalidade"
+                    "naturalidade",
+                    "contatos",
+                    "enderecos"
                 ],
                 "type" : "object",
                 "properties":{
@@ -2300,7 +2294,6 @@
                             "$ref":"#/components/schemas/EnderecoCreate"
                         }
                     }
-
                 },
                 "xml" : {
                     "name": "Luanda",
@@ -2310,10 +2303,10 @@
             "EstudanteResponse":{
                 "type" : "object",
                 "properties":{
-                    "municipios":{
+                    "estudantes":{
                         "type":"array",
                         "items":{
-                            "$ref":"#/components/schemas/Municipio"
+                            "$ref":"#/components/schemas/Estudante"
                         }
                     },
                     "perPage":{
@@ -2355,11 +2348,36 @@
                     },
                     "nome":{
                         "type" : "string",
-                        "example" : "Angola"
+                        "example" : "Sebastiao Antonio"
                     },
-                    "provincia_id" : {
-                        "type" : "string",
-                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    "data_nascimento" : {
+                        "type" : "Date",
+                        "example" :"2024-02-17T13:35:33.795Z"
+                    }
+                    ,
+                    "turma_id":{
+                        "type":"string",
+                        "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "contatos":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Contato"
+                        }
+                    },
+                    "naturalidade":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/Naturalidade"
+                    },
+                    "enderecos":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Endereco"
+                        }
+                    },
+                    "turma":{
+                        "type" : "object",
+                        "$ref" :"#/components/schemas/TurmaEstudanteResponse"
                     },
                     "createdAt": {
                         "type":"Date",
@@ -2368,10 +2386,6 @@
                     "updatedAt": {
                         "type":"Date",
                         "example":"2024-02-17T13:35:33.795Z"
-                    },
-                    "provincia":{
-                        "type":"object",
-                        "$ref":"#/components/schemas/ProvinciaPais"
                     }
                 },
                 "xml" : {
@@ -2555,6 +2569,68 @@
                     }
                 }
             },
+            "TurmaEstudanteResponse":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "turno":{
+                        "type" : "string",
+                        "example" : "Manhã"
+                    },
+                    "ano_academico_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "ano_academico" :{
+                        "type":"object",
+                        "$ref":"#/components/schemas/AnoAcademico"
+                    },
+                    "curso_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "curso":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/Curso"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "nome": "EDT-5"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
             "TurmaDataResponse":{
                 "required":[
                     "nome"
@@ -2592,7 +2668,7 @@
                     "estudantes":{
                         "type":"array",
                         "items":{
-                            "$ref":"#/components/schemas/ProvinciaDateResponse"
+                            "$ref":"#/components/schemas/EstudanteDateResponse"
                         }
                     }
                 },

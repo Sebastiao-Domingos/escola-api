@@ -58,7 +58,13 @@ export class EstudanteService implements EstudanteRepository{
                         rua
                     }
                 },
-
+            },
+            include:{
+                naturalidade : true,
+                turma : true
+            },
+            orderBy : {
+                numero_processo : "asc"
             }
         })
         .then(response => {
@@ -78,6 +84,17 @@ export class EstudanteService implements EstudanteRepository{
         return await prisma.estudante.findUnique({
             where : {
                 id : aluno_id
+            },
+            include:{
+                contatos : true,
+                naturalidade : true,
+                endereco:true,
+                turma : {
+                    include : {
+                        ano_academico : true,
+                        curso : true
+                    }
+                }
             }
         }).then( response =>response)
         .catch( error => error);
