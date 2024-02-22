@@ -1,17 +1,14 @@
 import { Request, Response } from "express";
 import { EstudanteService } from "../../services/users/Estudante.service";
-import { AlunoData, EstudanteDataCreate, SearchParamsData } from "../../Repositories/users/Estudante.repository";
+import { EstudanteDataCreate, EstudanteDataUpdate, SearchParamsData } from "../../Repositories/users/Estudante.repository";
 import { validate } from "uuid";
 import { BadRequestError } from "../../helpers/api-error";
 import { PrismaClient } from "@prisma/client";
-//import { validate } from "uuid";
 
 const service = new EstudanteService();
 
-
 const prisma = new PrismaClient();
 export class AlunoController{
-
     /**
      * create
      */
@@ -54,16 +51,68 @@ export class AlunoController{
      * create
      */
     public async update( request : Request, response : Response) {
-        // const aluno_id : string = request.params.id;
-        // const data : Partial<AlunoData> = request.body;
-        // data.id = aluno_id;
-        // return await service.update(data)
-        // .then( res => {
-        //     return response.status(200).json(res)
-        // })
-        // .catch( error => {
-        //     response.status(401).json({sms : "erro!" , error : error})
-        // })
+        const id : string = request.params.id;
+        const data : EstudanteDataUpdate = request.body;
+        console.log("Controller idd : ", id , "Data : " , data);
+
+        if(!id){
+            response.status(400).json( new BadRequestError("Id invalido do estudante"))
+        }
+
+        if(!validate(id)){
+            response.status(400).json( new BadRequestError("Id invalido do estudante"))
+        }
+
+        const estudante = await prisma.estudante.findUnique( { where : {id}}).then( res => res);
+
+        if(!estudante){
+            response.status(400).json( new BadRequestError("Estudante não encontrado!"))
+        }
+
+        if(data.turma_id){
+            if(!validate(data.turma_id)){
+                response.status(400).json( new BadRequestError("Id invalido da turma!"))
+            }else{
+                const turma = await prisma.turma.findUnique({ where : {id : data.turma_id}}).then( res => res)
+    
+                if(!turma){
+                    response.status(400).json( new BadRequestError("A turma não existe!"))
+                }
+            }
+        }
+        
+        if(data.naturalidade && data.naturalidade.id){
+            if(!validate(data.naturalidade.id)){
+                response.status(400).json( new BadRequestError("Id invalido da naturalidade! "))
+            }else {
+                const naturalidade = await prisma.naturalidade.findUnique({ where : {id : data.naturalidade.id}}).then( res => res)
+        
+                if(!naturalidade){
+                    response.status(400).json( new BadRequestError("Naturalidade não existe!"))
+                }
+            }
+        }
+
+        if(data.naturalidade && data.naturalidade.municipio_id){
+            if(!validate(data.naturalidade.municipio_id!)){
+                response.status(400).json( new BadRequestError("Id invalido do municipio na naturalidade!"))
+            }else {
+                const municipio = await prisma.municipio.findUnique({ where : {id: data.naturalidade.municipio_id}}).then( res =>res)
+    
+                if(!municipio){
+                    response.status(400).json( new BadRequestError("O Município da  natuaralidade não existe!"))
+                }
+            }
+        }
+
+        data.id = id;
+        return await service.update(data)
+        .then( res => {
+            return response.status(200).json(res)
+        })
+        .catch( error => {
+            response.status(401).json({sms : "erro!" , error : error.message})
+        })
     }
 
     /**

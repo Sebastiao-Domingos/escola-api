@@ -1411,12 +1411,12 @@
                     "content":{
                         "application/json" :{
                             "schema" : {
-                                "$ref":"#/components/schemas/EstudanteCreate"
+                                "$ref":"#/components/schemas/EstudanteUpdate"
                             }
                         },
                         "application/hml":{
                             "schema":{
-                                "$ref":"#/components/schemas/Estudante"
+                                "$ref":"#/components/schemas/EstudanteUpdate"
                             }
                         },
                         "application/x-www-urlencoded":{
@@ -2300,6 +2300,47 @@
                     "provincia_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
                 }
             },
+            "EstudanteUpdate":{
+                "required":[
+                    "id"
+                ],
+                "type" : "object",
+                "properties":{
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Sebastiao Antonio"
+                    },
+                    "data_nascimento" : {
+                        "type" : "Date",
+                        "example" :"2024-02-17T13:35:33.795Z"
+                    }
+                    ,
+                    "turma_id":{
+                        "type":"string",
+                        "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "contatos":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/ContatoUpdate"
+                        }
+                    },
+                    "naturalidade":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/NaturalidadeUpdate"
+                    },
+                    "enderecos":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/EnderecoUpdate"
+                        }
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda",
+                    "provincia_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                }
+            },
             "EstudanteResponse":{
                 "type" : "object",
                 "properties":{
@@ -2790,6 +2831,29 @@
                     "name": "Luanda"
                 }
             },
+            "NaturalidadeUpdate":{
+                "required":[
+                    "id"
+                ],
+                "type" : "object",
+                "properties":{
+                    "id":{
+                        "type":"string",
+                        "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "naturalidade":{
+                        "type" : "string",
+                        "example" : "Damba"
+                    },
+                    "municipio_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda"
+                }
+            },
             "Endereco":{
                 "type" : "object",
                 "properties":{
@@ -2875,6 +2939,37 @@
                     "name": "Luanda"
                 }
             },
+            "EnderecoUpdate":{
+                "required":[
+                    "id"
+                ],
+                "type" : "object",
+                "properties":{
+                    "id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "municipio_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "distrito":{
+                        "type" : "string",
+                        "example" : "Rangel"
+                    },
+                    "rua":{
+                        "type" : "string",
+                        "example" : "Brigada"
+                    },
+                    "ponto_de_referencia":{
+                        "type" : "string",
+                        "example" : "Brigada"
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda"
+                }
+            },
             "Contato":{
                 "type" : "object",
                 "properties":{
@@ -2931,6 +3026,29 @@
                 ],
                 "type" : "object",
                 "properties":{
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Email"
+                    },
+                    "valor":{
+                        "type" : "string",
+                        "example" : "seba@gmail.com"
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda"
+                }
+            },
+            "ContatoUpdate":{
+                "required":[
+                    "id"
+                ],
+                "type" : "object",
+                "properties":{
+                    "id":{
+                        "type" :"string",
+                        "example" :"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
                     "nome":{
                         "type" : "string",
                         "example" : "Email"

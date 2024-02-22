@@ -1,6 +1,6 @@
 
 import express from "express"
-import { AlunoController } from "../../controllers/users/Aluno.controller";
+import { AlunoController } from "../../controllers/users/Estudante.controller";
 
 const estudantes_routes = express();
 

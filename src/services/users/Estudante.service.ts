@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import EstudanteRepository, { AlunoData, EstudanteDataCreate, ResponseData, SearchParamsData } from "../../Repositories/users/Estudante.repository";
+import EstudanteRepository, { AlunoData, EstudanteDataCreate, EstudanteDataUpdate, ResponseData, SearchParamsData } from "../../Repositories/users/Estudante.repository";
 
 
 const prisma = new PrismaClient();
@@ -30,12 +30,30 @@ export class EstudanteService implements EstudanteRepository{
         }).then( response => response)
         .catch( error => error);
     };
-    // public async update(data: Partial<EstudanteDataCreate>) : Promise<EstudanteDataCreate>{
-    //     // return await prisma.estudante.update().then( response => response)
-    //     // .catch( error =>error);
 
-    //     return 
-    // };
+    public async update(data: Partial<EstudanteDataUpdate>) : Promise<EstudanteDataCreate>{
+        const {id, nome , data_nascimento , turma_id , contatos ,enderecos , naturalidade} = data;
+        return await prisma.estudante.update( {
+             where :{
+                id
+             },
+            data : {
+                nome ,
+                data_nascimento,
+                turma_id,
+                naturalidade : {
+                    update : naturalidade
+                }
+            },
+            include : {
+                endereco : true,
+                naturalidade : true,
+                contatos : true,
+            }            
+        }).then( response => response)
+        .catch( error => error);
+    };
+
     public async get(searchParams : Partial<SearchParamsData>) : Promise<ResponseData>{
         const {distrito,municipio_id,rua,turma_id} =  searchParams;
 
@@ -80,6 +98,7 @@ export class EstudanteService implements EstudanteRepository{
         })
         .catch( error =>error)
     };
+
     public async find (aluno_id: string) : Promise<EstudanteDataCreate>{
         return await prisma.estudante.findUnique({
             where : {
@@ -99,6 +118,7 @@ export class EstudanteService implements EstudanteRepository{
         }).then( response =>response)
         .catch( error => error);
     };
+    
     public async delete (aluno_id: string):Promise<AlunoData>{
         return await prisma.estudante.delete( {
             where : {

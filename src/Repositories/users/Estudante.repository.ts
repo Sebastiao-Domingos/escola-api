@@ -43,6 +43,34 @@ export type EstudanteDataCreate = {
     ]
 }
 
+export type EstudanteDataUpdate = {
+  id: string
+  nome: string,
+  data_nascimento: Date,
+  numero_processo? : number,
+  turma_id: string,
+  contatos:{
+      id:string
+      nome?: string,
+      valor?: string,
+      estudante_id : string,
+  }[]
+  ,
+  naturalidade: {
+    id:string
+    naturalidade?: string,
+    municipio_id?: string,
+  },
+  enderecos:{
+      id:string
+      municipio_id?: string,
+      distrito?: string,
+      rua?: string,
+      ponto_de_referencia?: string
+    }[]
+}
+
+
 export type ResponseData ={
     estudantes : EstudanteDataCreate[]
     perPage : number
@@ -64,7 +92,7 @@ export type SearchParamsData = {
 
 export default interface EstudanteRepository {
     add:(data : EstudanteDataCreate) => Promise<EstudanteDataCreate>
-    // update:(data:Partial<EstudanteDataCreate>) => Promise<EstudanteDataCreate>
+    update:(data:Partial<EstudanteDataUpdate>) => Promise<EstudanteDataCreate>
     get:(searchParams : Partial<SearchParamsData>) => Promise<ResponseData>
     find :(aluno_id:string) => Promise<EstudanteDataCreate>
     delete:(aluno_id : string ) => Promise<AlunoData>
