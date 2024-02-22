@@ -49,27 +49,29 @@ export type EstudanteDataUpdate = {
   data_nascimento: Date,
   numero_processo? : number,
   turma_id: string,
-  contatos:{
-      id:string
-      nome?: string,
-      valor?: string,
-      estudante_id : string,
-  }[]
-  ,
-  naturalidade: {
-    id:string
-    naturalidade?: string,
-    municipio_id?: string,
-  },
-  enderecos:{
-      id:string
-      municipio_id?: string,
-      distrito?: string,
-      rua?: string,
-      ponto_de_referencia?: string
-    }[]
+  contatos:ContatoDate[],
+  naturalidade: NaturalidadeDate,
+  enderecos:EnderecoDate[]
+}
+export type ContatoDate = {
+  id:string
+  nome?: string,
+  valor?: string,
+  // estudante_id : string,
 }
 
+export type NaturalidadeDate = {
+  id:string
+  naturalidade?: string,
+  municipio_id?: string,
+}
+export type EnderecoDate = {
+  id?:string
+  municipio_id?: string,
+  distrito?: string,
+  rua?: string,
+  ponto_de_referencia?: string
+}
 
 export type ResponseData ={
     estudantes : EstudanteDataCreate[]

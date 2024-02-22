@@ -13,10 +13,14 @@ export class EstudanteService implements EstudanteRepository{
                 data_nascimento,
                 turma_id,
                 contatos : {
-                    create : contatos
+                    createMany :{
+                        data:contatos
+                    }
                 },
                 endereco : {
-                    create :enderecos
+                    createMany :{
+                        data :enderecos
+                    }
                 },
                 naturalidade : {
                     create : naturalidade
@@ -33,6 +37,14 @@ export class EstudanteService implements EstudanteRepository{
 
     public async update(data: Partial<EstudanteDataUpdate>) : Promise<EstudanteDataCreate>{
         const {id, nome , data_nascimento , turma_id , contatos ,enderecos , naturalidade} = data;
+        // if( contatos ){
+        //     await prisma.contato.updateMany({
+        //         where : {
+        //             OR : id  contatos.map( contato => contato.id)
+        //         },
+
+        //     })
+        // }
         return await prisma.estudante.update( {
              where :{
                 id
@@ -43,6 +55,14 @@ export class EstudanteService implements EstudanteRepository{
                 turma_id,
                 naturalidade : {
                     update : naturalidade
+                },
+                contatos : {
+                    updateMany : {
+                        where : {
+                            estudante_id : id
+                        },
+                        data : [contatos]
+                    }
                 }
             },
             include : {
@@ -99,10 +119,10 @@ export class EstudanteService implements EstudanteRepository{
         .catch( error =>error)
     };
 
-    public async find (aluno_id: string) : Promise<EstudanteDataCreate>{
+    public async find (estudante_id: string) : Promise<EstudanteDataCreate>{
         return await prisma.estudante.findUnique({
             where : {
-                id : aluno_id
+                id : estudante_id
             },
             include:{
                 contatos : true,
@@ -111,7 +131,6 @@ export class EstudanteService implements EstudanteRepository{
                 turma : {
                     include : {
                         ano_academico : true,
-                        curso : true
                     }
                 }
             }
@@ -119,10 +138,10 @@ export class EstudanteService implements EstudanteRepository{
         .catch( error => error);
     };
     
-    public async delete (aluno_id: string):Promise<AlunoData>{
+    public async delete (estudante_id: string):Promise<AlunoData>{
         return await prisma.estudante.delete( {
             where : {
-                id : aluno_id
+                id : estudante_id
             }
         }).then( response =>response)
         .catch( error =>error)

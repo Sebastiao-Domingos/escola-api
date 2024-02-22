@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { EstudanteService } from "../../services/users/Estudante.service";
-import { EstudanteDataCreate, EstudanteDataUpdate, SearchParamsData } from "../../Repositories/users/Estudante.repository";
+import { ContatoDate, EnderecoDate, EstudanteDataCreate, EstudanteDataUpdate, SearchParamsData } from "../../Repositories/users/Estudante.repository";
 import { validate } from "uuid";
 import { BadRequestError } from "../../helpers/api-error";
 import { PrismaClient } from "@prisma/client";
@@ -53,7 +53,6 @@ export class AlunoController{
     public async update( request : Request, response : Response) {
         const id : string = request.params.id;
         const data : EstudanteDataUpdate = request.body;
-        console.log("Controller idd : ", id , "Data : " , data);
 
         if(!id){
             response.status(400).json( new BadRequestError("Id invalido do estudante"))
@@ -105,6 +104,34 @@ export class AlunoController{
             }
         }
 
+        if(data.contatos ){
+            if(!validateContato(data.contatos)){
+                response.status(400).json( new BadRequestError("Id invalido do contato! "))
+            }else {
+                const contato = await prisma.contato.findUnique({
+                    where : {
+                        id : data.contatos[0].id
+                    }
+                }).then( res => res)
+        
+                if(!contato){
+                    response.status(400).json( new BadRequestError("Contato não existe!"))
+                }
+            }
+        }
+
+        if(data.naturalidade && data.naturalidade.municipio_id){
+            if(!validate(data.naturalidade.municipio_id!)){
+                response.status(400).json( new BadRequestError("Id invalido do municipio na naturalidade!"))
+            }else {
+                const municipio = await prisma.municipio.findUnique({ where : {id: data.naturalidade.municipio_id}}).then( res =>res)
+    
+                if(!municipio){
+                    response.status(400).json( new BadRequestError("O Município da  natuaralidade não existe!"))
+                }
+            }
+        }
+
         data.id = id;
         return await service.update(data)
         .then( res => {
@@ -133,9 +160,13 @@ export class AlunoController{
      * find
      */
     public async find( request :Request , response : Response) {
-        const aluno_id : string = request.params.id;
+        const estudante_id : string = request.params.id;
 
-        return await service.find(aluno_id)
+        if(!validate(estudante_id)){
+            response.status(400).json( new BadRequestError("Id invlido!"))
+        }
+
+        return await service.find(estudante_id)
         .then( resp => {
             return response.status(200).json(resp)
         })
@@ -148,9 +179,9 @@ export class AlunoController{
      * delete
      */
     public async delete( request : Request , response :Response) {
-        const aluno_id :string = request.params.id;
+        const estudante_id :string = request.params.id;
         
-        return await service.delete(aluno_id)
+        return await service.delete(estudante_id)
         .then( res => {
             response.status(200).json(res);
         })
@@ -170,15 +201,16 @@ function validateEndereco(
 }
 
 
-function validateEnderecoMunicipio( 
-    endereco : { municipio_id: string,
-                distrito: string,
-                rua: string,
-                ponto_de_referencia: string}[]
-){
-    return endereco.every( async (ender) => {
-        const find = await prisma.municipio.findUnique( { where : { id : ender.municipio_id}}).then( res => res);
+function validateEnderecoMunicipio(  datas : EnderecoDate[]){
+    return datas.every( async (ender) => {
+        const find = await prisma.municipio.findUnique( { where : { id : ender.municipio_id  }}).then( res => res);
+        return find !==null
+    })
+}
+function validateContato(  datas : ContatoDate[]){
 
+    return datas.every( async (ender) => {
+        const find = await prisma.municipio.findUnique( { where : { id : ender.id  }}).then( res => res);
         return find !==null
     })
 }

@@ -41,14 +41,16 @@ model Municipio {
 model Endereco {
   id String @unique @default(uuid()) @db.VarChar(36)
   municipio_id String @db.VarChar(36)
-  estudante_id String
   distrito String
   rua String 
   ponto_de_referencia String
+  estudante_id String? @db.VarChar(36)
+  professor_id String? @db.VarChar(36)
+  municipio Municipio @relation(fields: [municipio_id] , references: [id], onDelete: Cascade , onUpdate: Cascade)
+  estudante Estudante? @relation(fields: [estudante_id],references: [id] , onDelete:  Cascade , onUpdate: Cascade)
+  professor Professor? @relation(fields: [professor_id] , references: [id] ,onDelete: Cascade ,onUpdate: Cascade)
   createAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
-  municipio Municipio @relation(fields: [municipio_id] , references: [id], onDelete: Cascade , onUpdate: Cascade)
-  estudante Estudante @relation(fields: [estudante_id],references: [id] , onDelete:  Cascade , onUpdate: Cascade)
 }
 
 model Estudante {
@@ -68,18 +70,22 @@ model Naturalidade {
   id String @unique @default(uuid()) @db.VarChar(36)
   naturalidade String
   municipio_id String
-  estudante Estudante @relation(fields: [estudante_id] , references: [id])
-  estudante_id String @unique @db.VarChar(36)
+  estudante Estudante? @relation(fields: [estudante_id] , references: [id])
+  estudante_id String? @unique @db.VarChar(36)
+  professor Professor? @relation(fields: [professor_id] , references: [id])
+  professor_id String? @unique @db.VarChar(36)
 }
 
 model Contato {
   id String @default(uuid()) @unique @db.VarChar(36)
   nome String
   valor String @unique
-  estudante_id String @db.VarChar(36)
+  estudante_id String? @db.VarChar(36)
+  estudante Estudante? @relation(fields: [estudante_id] , references: [id], onDelete: Cascade , onUpdate:  Cascade)
+  professor_id String? @db.VarChar(36)
+  professor Professor? @relation(fields: [professor_id ], references: [id], onDelete: Cascade , onUpdate:  Cascade)
   createAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
-  estudante Estudante @relation(fields: [estudante_id] , references: [id], onDelete: Cascade , onUpdate:  Cascade)
 }
 
 model Turma {
@@ -104,5 +110,31 @@ model Ano_academico {
 model Curso {
   id String @default(uuid())  @unique @db.VarChar(36)
   nome String @unique
+  departamento_id String @db.VarChar(36)
   turmas Turma[]
+  departamento Departamento @relation(fields: [departamento_id] , references: [id] , onDelete: Cascade , onUpdate: Cascade)
 }
+
+model Departamento {
+  id String @unique @default(uuid()) @db.VarChar(36)
+  codigo String @unique
+  nome String
+  professores Professor[]
+  cursos Curso[]
+}
+
+model Professor {
+  id String @unique @default(uuid()) @db.VarChar(36)
+  numero_processo Int @unique @default(autoincrement())
+  nome String
+  status Boolean
+  data_nascimento DateTime
+  naturalidade Naturalidade?
+  endereco Endereco[]
+  contatos Contato[]
+  departamento_id String @db.VarChar(36)
+  departamento Departamento @relation(fields: [departamento_id], references: [id] , onDelete: Cascade ,onUpdate: Cascade)
+  createAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())
+}
+
