@@ -8,9 +8,9 @@ import { municipios_routes } from "./localities/Municipio.routes";
 import { anoAcademico_routes } from "./school/AnoAcademico.routes";
 import { turma_routes } from "./school/Turma.routes";
 import { curso_routes } from "./school/Curso.routes";
+import { departamento_routes } from "./school/Departamento.routes";
 
 const routes = express();
-
 
 routes.use( express.json());
 routes.use("/api-docs", SwaggerUi.serve , SwaggerUi.setup(swaggerDocs , { explorer : true}))
@@ -21,5 +21,6 @@ routes.use(municipios_routes)
 routes.use(anoAcademico_routes)
 routes.use(turma_routes)
 routes.use(curso_routes)
+routes.use(departamento_routes)
 export {routes};
 

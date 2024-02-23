@@ -115,12 +115,15 @@ model Curso {
   departamento Departamento @relation(fields: [departamento_id] , references: [id] , onDelete: Cascade , onUpdate: Cascade)
 }
 
+
 model Departamento {
   id String @unique @default(uuid()) @db.VarChar(36)
   codigo String @unique
   nome String
   professores Professor[]
   cursos Curso[]
+  createAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())
 }
 
 model Professor {

@@ -781,6 +781,219 @@
                 }
             }
         },
+        "/departamentos":{
+            "post":{
+                "tags":["Departamento"],
+                "summary":"Adicionar Departamento",
+                "description":"Adicionar Departamento",
+                "operationId":"adicionarDepartamento",
+                "requestBody":{
+                    "description" :"Criar departamento",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/DepartamentoCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/DepartamentoCreate"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200" :{
+                        "description":"criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Departamento"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Departamento"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "get":{
+                "tags" : ["Departamento"],
+                "description" : "rota listar todas Departamentos",
+                "summary" : "listar Departamentos",
+                "operationId":"listarDepartamento",
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/Departamento"
+                                    }
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/Departamento"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            }
+        },
+        "/departamentos/{departamento_id}":{
+            "get":{
+                "tags":["Departamento"],
+                "summary":"Pegar dos dados do Departamento pelo id",
+                "description":"Pegar dos dados do Departamento pelo id",
+                "operationId":"listarByIdDepartamento",
+                "parameters":[
+                    {
+                        "name":"departamento_id",
+                        "in":"path",
+                        "description":"id do Departamento",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/DepartamentoDataResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/DepartamentoCreate"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "put":{
+                "tags":["Departamento"],
+                "description" : "rota atualizar o Departamento",
+                "summary" : "atualizar o Departamento!",
+                "operationId":"atualizarDepartamento",
+                "parameters":[
+                    {
+                        "name":"departamento_id",
+                        "in":"path",
+                        "description":"id do Departamento",
+                        "required" : true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "description" :"atualizar o departamento",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/DepartamentoCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/DepartamentoCreate"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Departamento"
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/Departamento"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar departamento"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Departamento"],
+                "summary":"Eliminar o Departamento pelo id",
+                "description":"Eliminar o Departamento pelo id",
+                "operationId":"eliminarByIdDepartamento",
+                "parameters":[
+                    {
+                        "name":"departamento_id",
+                        "in":"path",
+                        "description":"id do departamento",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"Eliminado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Departamento"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Departamento"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
+        },
         "/ano_academico":{
             "post":{
                 "tags":["Ano Académico"],
@@ -860,7 +1073,7 @@
         },
         "/ano_academico/{ano_id}":{
             "get":{
-                "tags":["País"],
+                "tags":["Ano Académico"],
                 "summary":"Pegar dos dados do ano académico pelo id",
                 "description":"Pegar dos dados do ano académico pelo id",
                 "operationId":"listarByIdAno",
@@ -2756,6 +2969,198 @@
                     "curso_id":{
                         "type" : "string",
                         "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                }
+            },
+            "Departamento":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "codigo":{
+                        "type" : "string",
+                        "example" : "INFDEP"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "nome": "EDT-5"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "DepartamentoProfessorResponse":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "turno":{
+                        "type" : "string",
+                        "example" : "Manhã"
+                    },
+                    "ano_academico_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "ano_academico" :{
+                        "type":"object",
+                        "$ref":"#/components/schemas/AnoAcademico"
+                    },
+                    "curso_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "curso":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/Curso"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "nome": "EDT-5"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "DepartamentoDataResponse":{
+                "required":[
+                    "nome"
+                ],
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "codigo":{
+                        "type" : "string",
+                        "example" : "INFDEP"
+                    },
+                    "ano_academico_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "createdAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "cursos":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Curso"
+                        }
+                    },
+                    "professores":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Estudante"
+                        }
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "DepartamentoCreate":{
+                "required":[
+                    "nome","codigo"
+                ],
+                "type" : "object",
+                "properties":{
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "codigo":{
+                        "type" : "string",
+                        "example" : "Manhã"
                     }
                 },
                 "xml" : {
