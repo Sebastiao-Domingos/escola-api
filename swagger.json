@@ -1439,7 +1439,7 @@
                 "requestBody":{
                     "description" :"Criar uma estudante",
                     "content":{
-                        "application/json" :{
+                        "multipart/form-data" :{
                             "schema" : {
                                 "$ref":"#/components/schemas/EstudanteCreate"
                             }
@@ -1622,7 +1622,7 @@
                 "requestBody":{
                     "description" :"Atualizar  estudante",
                     "content":{
-                        "application/json" :{
+                        "multipart/form-data" :{
                             "schema" : {
                                 "$ref":"#/components/schemas/EstudanteUpdate"
                             }
@@ -2485,6 +2485,9 @@
                     "data_nascimento" : {
                         "type" : "Date",
                         "example" :"2024-02-17T13:35:33.795Z"
+                    },
+                    "foto" :{
+                        "type":"file"
                     }
                     ,
                     "turma_id":{
@@ -2492,20 +2495,16 @@
                         "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
                     },
                     "contatos":{
-                        "type":"array",
-                        "items":{
-                            "$ref":"#/components/schemas/ContatoCreate"
-                        }
+                        "type":"object",
+                        "$ref":"#/components/schemas/ContatoCreate"
                     },
                     "naturalidade":{
                         "type":"object",
                         "$ref":"#/components/schemas/NaturalidadeCreate"
                     },
                     "enderecos":{
-                        "type":"array",
-                        "items":{
-                            "$ref":"#/components/schemas/EnderecoCreate"
-                        }
+                        "type":"object",
+                        "$ref":"#/components/schemas/EnderecoCreate"
                     }
                 },
                 "xml" : {
@@ -2532,21 +2531,20 @@
                         "type":"string",
                         "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
                     },
+                    "foto":{
+                        "type":"file"
+                    },
                     "contatos":{
-                        "type":"array",
-                        "items":{
-                            "$ref":"#/components/schemas/ContatoUpdate"
-                        }
+                        "type":"object",
+                        "$ref":"#/components/schemas/ContatoCreate"
                     },
                     "naturalidade":{
                         "type":"object",
-                        "$ref":"#/components/schemas/NaturalidadeUpdate"
+                        "$ref":"#/components/schemas/NaturalidadeCreate"
                     },
                     "enderecos":{
-                        "type":"array",
-                        "items":{
-                            "$ref":"#/components/schemas/EnderecoUpdate"
-                        }
+                        "type":"object",
+                        "$ref":"#/components/schemas/EnderecoCreate"
                     }
                 },
                 "xml" : {
@@ -2632,6 +2630,10 @@
                     "turma":{
                         "type" : "object",
                         "$ref" :"#/components/schemas/TurmaEstudanteResponse"
+                    },
+                    "foto":{
+                        "type" : "object",
+                        "$ref" :"#/components/schemas/Imagem"
                     },
                     "createdAt": {
                         "type":"Date",
@@ -3478,6 +3480,10 @@
                         "type" : "string",
                         "example" : "Angola"
                     },
+                    "departamento_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
                     "createdAt":{
                         "type":"Date",
                         "example":"2024-02-17T13:35:33.795Z"
@@ -3520,6 +3526,10 @@
                         "type" : "string",
                         "example" : "Informática"
                     },
+                    "departamento_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
                     "createdAt": {
                         "type":"Date",
                         "example":"2024-02-17T13:35:33.795Z"
@@ -3528,11 +3538,15 @@
                         "type":"Date",
                         "example":"2024-02-17T13:35:33.795Z"
                     },
-                    "provincias":{
+                    "turmas":{
                         "type":"array",
                         "items":{
-                            "$ref":"#/components/schemas/ProvinciaDateResponse"
+                            "$ref":"#/components/schemas/Turma"
                         }
+                    },
+                    "departamento":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/Departamento"
                     }
                 },
                 "xml" : {
@@ -3566,10 +3580,56 @@
                     "nome":{
                         "type" : "string",
                         "example" : "Informática"
+                    },
+                    "departamento_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
                     }
                 },
                 "xml" : {
                     "name": "País"
+                }
+            },
+            "Imagem":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "path":{
+                        "type" : "string",
+                        "example" : "Angola"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
                 }
             }
         },

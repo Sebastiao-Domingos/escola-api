@@ -1,12 +1,14 @@
 import { PrismaClient } from "@prisma/client";
-import EstudanteRepository, { AlunoData, EstudanteDataCreate, EstudanteDataUpdate, ResponseData, SearchParamsData } from "../../Repositories/users/Estudante.repository";
+import EstudanteRepository, { AlunoData, EstudanteDataCreate, EstudanteDataUpdate, ImageData, ResponseData, SearchParamsData } from "../../Repositories/users/Estudante.repository";
 
 
 const prisma = new PrismaClient();
 export class EstudanteService implements EstudanteRepository{
 
     public async add(data: EstudanteDataCreate):Promise<EstudanteDataCreate>{
-        const {nome , data_nascimento , turma_id , contatos ,enderecos , naturalidade} = data;
+        const {nome , data_nascimento , turma_id , contatos ,enderecos , naturalidade ,foto} = data;
+        const fotoCrete : ImageData = {path : `/files/${foto.filename}`};
+
         return await prisma.estudante.create( {
             data : {
                 nome ,
@@ -24,12 +26,16 @@ export class EstudanteService implements EstudanteRepository{
                 },
                 naturalidade : {
                     create : naturalidade
+                },
+                foto : {
+                    create : fotoCrete
                 }
             },
             include : {
                 endereco : true,
                 naturalidade : true,
                 contatos : true,
+                foto : true
             }            
         }).then( response => response)
         .catch( error => error);
@@ -132,7 +138,8 @@ export class EstudanteService implements EstudanteRepository{
                     include : {
                         ano_academico : true,
                     }
-                }
+                },
+                foto : true
             }
         }).then( response =>response)
         .catch( error => error);

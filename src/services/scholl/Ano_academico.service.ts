@@ -24,7 +24,11 @@ export class AnoAcademicoService implements AnoRepository{
     };
 
     public async get () : Promise<AnoData[]>{
-        return await prisma.ano_academico.findMany()
+        return await prisma.ano_academico.findMany({
+            orderBy : {
+                valor : "asc"
+            }
+        })
         .then( response => response)
         .catch( error => error)
     };

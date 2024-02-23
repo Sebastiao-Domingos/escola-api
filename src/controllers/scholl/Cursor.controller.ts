@@ -26,6 +26,21 @@ export class CursoController{
         if( curso ){
             response.status(400).json( new BadRequestError("Já existe curso com este nome"))
         }
+
+        if( !validate(data.departamento_id) ){
+            response.status(400).json( new BadRequestError("Id inválido"))
+        }
+
+        const departamento= await prisma.departamento.findUnique({
+            where : {
+                id : data.departamento_id
+            }
+        })
+
+        if( !departamento ){
+            response.status(400).json( new BadRequestError("Já existe departamento com este id"))
+        }
+
         await service.add(data)
         .then( res => {
             return response.status(200).json(res)

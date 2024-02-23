@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { EstudanteService } from "../../services/users/Estudante.service";
-import { ContatoDate, EnderecoDate, EstudanteDataCreate, EstudanteDataUpdate, SearchParamsData } from "../../Repositories/users/Estudante.repository";
+import { ContatoDate, ContatoType, EnderecoDate, EnderecoType, EstudanteDataCreate, EstudanteDataCreateREceived, EstudanteDataUpdate, NaturalidadeDate, NaturalidadeType, SearchParamsData } from "../../Repositories/users/Estudante.repository";
 import { validate } from "uuid";
 import { BadRequestError } from "../../helpers/api-error";
-import { PrismaClient } from "@prisma/client";
+import { Naturalidade, PrismaClient } from "@prisma/client";
 
 const service = new EstudanteService();
 
@@ -13,9 +13,20 @@ export class AlunoController{
      * create
      */
     public async create( request : Request, response : Response) {
-        const data : EstudanteDataCreate = request.body;
+        const data : EstudanteDataCreateREceived = request.body;
+        const file  = request.file as Express.Multer.File;
 
-        if(!validate(data.turma_id) || !validate(data.naturalidade.municipio_id) || !validateEndereco(data.enderecos)){
+        data.foto = file 
+
+        data.naturalidade.replace("\n\r","")
+        data.enderecos.replace("\n\r","")
+        data.contatos.replace("\n\r","")
+        const naturality:NaturalidadeType = JSON.parse(data.naturalidade)
+        const address : EnderecoType = JSON.parse(data.enderecos)
+        const contacts : ContatoType = JSON.parse(data.contatos)
+
+        
+        if(!validate(data.turma_id) || !validate(naturality.municipio_id) || !validate(address.municipio_id)){
             response.status(400).json( new BadRequestError("Id invalido!"))
         }
 
@@ -24,27 +35,37 @@ export class AlunoController{
         if(!turma){
             response.status(400).json( new BadRequestError("A turma não existe!"))
         }
-
-        const naturalidade = await prisma.municipio.findUnique({ where : {id : data.naturalidade.municipio_id}}).then( res =>res)
+        
+        const naturalidade = await prisma.municipio.findUnique({ where : {id : naturality.municipio_id}}).then( res =>res)
 
         if(!naturalidade){
             response.status(400).json( new BadRequestError("A Município da  natuaralidade não existe!"))
         }
 
-        const endereco = validateEnderecoMunicipio(data.enderecos)
 
-        if(!endereco){
+        const endrer = await prisma.municipio.findUnique({ where : {id : naturality.municipio_id}}).then( res =>res)
+
+        if(!endrer){
             response.status(400).json( new BadRequestError("A Município do endereço não existe!"))
         }
 
-        return await service.add(data)
+        const dataCreation : EstudanteDataCreate = {
+            nome : data.nome,
+            turma_id : data.turma_id,
+            data_nascimento : data.data_nascimento,
+            foto : file,
+            naturalidade : naturality, 
+            contatos : contacts,
+            enderecos : address
+        }
+
+        return await service.add(dataCreation)
         .then( res => {
             return response.status(200).json(res)
         })
         .catch( error => {
             response.status(401).json({sms : "erro!" , error : error.message})
         })
-
 
     }
         /**

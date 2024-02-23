@@ -34,7 +34,8 @@ export class CursoService implements CursoRepository{
                 id : curso_id
             },
             include : {
-                turmas : true
+                turmas : true,
+                departamento :true
             }
         })
         .then( response => response)
