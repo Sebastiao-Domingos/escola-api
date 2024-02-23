@@ -96,6 +96,7 @@ model Turma {
   curso_id String @default("c2d21545-c4f2-4f32-befc-245d41db94cb") @db.VarChar(36)
   ano_academico_id String @db.VarChar(36)
   estudantes Estudante[]
+  turma_professor TurmaProfessor[]
   ano_academico Ano_academico @relation(fields: [ano_academico_id] , references: [id] , onDelete: Cascade , onUpdate: Cascade)
   curso Curso @relation(fields: [curso_id] , references: [id] , onDelete: Cascade, onUpdate: Cascade)
 }
@@ -136,11 +137,30 @@ model Professor {
   foto Imagens?
   endereco Endereco[]
   contatos Contato[]
+  turmas_professor TurmaProfessor[]
   departamento_id String @db.VarChar(36)
   departamento Departamento @relation(fields: [departamento_id], references: [id] , onDelete: Cascade ,onUpdate: Cascade)
   createAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
 }
+
+model TurmaProfessor {
+  id String  @default(uuid()) @unique @db.VarChar(36)
+  turma_id String
+  professor_id String
+  disciplina_id String @unique
+  professor Professor @relation(fields: [professor_id],references: [id])
+  turma Turma @relation(fields: [turma_id] , references: [id])
+  disciplina Disciplina @relation(fields: [disciplina_id] , references: [id])
+}
+
+model Disciplina {
+  id String  @default(uuid()) @unique @db.VarChar(36)
+  nome String
+  carga Int
+  turma_professor TurmaProfessor?
+}
+
 model Imagens {
   id String @default(uuid()) @unique @db.VarChar(36)
   path String
