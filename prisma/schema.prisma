@@ -1,6 +1,9 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,8 +13,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Administrador {
+  id    String   @unique @default(uuid())
+  email String  @unique
+  nome  String
+  senha String
+}
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 model Pais {
-  id  String @unique @default(uuid()) @db.VarChar(36)
+  id  String @unique @default(uuid()) @db.VarChar(36) 
   nome String @unique
   provincias Provincia[]
   createdAt DateTime @default(now())
@@ -19,7 +32,7 @@ model Pais {
 }
 
 model Provincia {
-  id String @unique @default(uuid()) @db.VarChar(36)
+  id String @unique @default(uuid()) @db.VarChar(36) 
   pais_id String @db.VarChar(36)
   nome String
   createdAt DateTime @default(now())
@@ -29,7 +42,7 @@ model Provincia {
 }
 
 model Municipio {
-  id String @unique @default(uuid()) @db.VarChar(36)
+  id String @unique @default(uuid()) @db.VarChar(36) 
   provincia_id String @db.VarChar(36)
   nome String
   enderecos Endereco[]
@@ -39,7 +52,7 @@ model Municipio {
 }
 
 model Endereco {
-  id String @unique @default(uuid()) @db.VarChar(36)
+  id String @unique @default(uuid()) @db.VarChar(36) 
   municipio_id String @db.VarChar(36)
   distrito String
   rua String 
@@ -54,8 +67,8 @@ model Endereco {
 }
 
 model Estudante {
-  id String @unique @default(uuid()) @db.VarChar(36)
-  numero_processo Int @unique @default(autoincrement())
+  id String @unique @default(uuid()) @db.VarChar(36) @id
+  numero_processo Int @unique  
   nome String
   data_nascimento DateTime
   turma_id String? @db.VarChar(36)
@@ -68,7 +81,7 @@ model Estudante {
   turma Turma? @relation(fields: [turma_id] ,references: [id] , onDelete: Cascade , onUpdate: Cascade)
 }
 model Naturalidade {
-  id String @unique @default(uuid()) @db.VarChar(36)
+  id String @unique @default(uuid()) @db.VarChar(36) 
   naturalidade String
   municipio_id String
   estudante Estudante? @relation(fields: [estudante_id] , references: [id])
@@ -78,7 +91,7 @@ model Naturalidade {
 }
 
 model Contato {
-  id String @default(uuid()) @unique @db.VarChar(36)
+  id String @default(uuid()) @unique @db.VarChar(36) 
   nome String
   valor String @unique
   estudante_id String? @db.VarChar(36)
@@ -90,10 +103,10 @@ model Contato {
 }
 
 model Turma {
-  id String @unique @default(uuid()) @db.VarChar(36)
+  id String @unique @default(uuid()) @db.VarChar(36) 
   nome String @unique
   turno String @default("Manhã")
-  curso_id String @default("c2d21545-c4f2-4f32-befc-245d41db94cb") @db.VarChar(36)
+  curso_id String @db.VarChar(36)
   ano_academico_id String @db.VarChar(36)
   estudantes Estudante[]
   turma_professor TurmaProfessor[]
@@ -102,7 +115,7 @@ model Turma {
 }
 
 model Ano_academico {
-  id String @unique @default(uuid()) @db.VarChar(36)
+  id String @unique @default(uuid()) @db.VarChar(36) 
   valor Int @unique
   turmas Turma[]
   createAt DateTime @default(now()) 
@@ -110,63 +123,65 @@ model Ano_academico {
 }
 
 model Curso {
-  id String @default(uuid())  @unique @db.VarChar(36)
+  id String @default(uuid())  @unique @db.VarChar(36) 
   nome String @unique
-  departamento_id String @db.VarChar(36)
+  departamento_id String? @db.VarChar(36) @unique
   turmas Turma[]
-  departamento Departamento @relation(fields: [departamento_id] , references: [id] , onDelete: Cascade , onUpdate: Cascade)
+  departamento Departamento? @relation(fields: [departamento_id] , references: [id])
 }
 
 model Departamento {
-  id String @unique @default(uuid()) @db.VarChar(36)
+  id String @unique @default(uuid()) @db.VarChar(36) 
   codigo String @unique
   nome String
-  professores Professor[]
-  cursos Curso[]
+  cursos Curso?
   createAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
 }
 
 model Professor {
-  id String @unique @default(uuid()) @db.VarChar(36)
-  numero_processo Int @unique @default(autoincrement())
+  id String @unique @default(uuid()) @db.VarChar(36) 
   nome String
-  status Boolean
+  status TypeStatus @default(desativo)
   data_nascimento DateTime
   naturalidade Naturalidade?
   foto Imagens?
   endereco Endereco[]
   contatos Contato[]
   turmas_professor TurmaProfessor[]
-  departamento_id String @db.VarChar(36)
-  departamento Departamento @relation(fields: [departamento_id], references: [id] , onDelete: Cascade ,onUpdate: Cascade)
   createAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
 }
 
+enum TypeStatus {
+  ativo
+  desativo
+}
+
 model TurmaProfessor {
-  id String  @default(uuid()) @unique @db.VarChar(36)
+  id String  @default(uuid()) @unique @db.VarChar(36) 
   turma_id String
   professor_id String
-  disciplina_id String @unique
+  disciplina_id String
   professor Professor @relation(fields: [professor_id],references: [id])
   turma Turma @relation(fields: [turma_id] , references: [id])
   disciplina Disciplina @relation(fields: [disciplina_id] , references: [id])
 }
 
 model Disciplina {
-  id String  @default(uuid()) @unique @db.VarChar(36)
+  id String  @default(uuid()) @unique @db.VarChar(36) 
   nome String
   carga Int
-  turma_professor TurmaProfessor?
+  turma_professor TurmaProfessor[]
 }
 
 model Imagens {
-  id String @default(uuid()) @unique @db.VarChar(36)
+  id String @default(uuid()) @unique @db.VarChar(36) 
   path String
-  estudante Estudante? @relation(fields: [estudante_id] , references: [id])
   estudante_id String? @unique @db.VarChar(36)
   professor_id String? @unique @db.VarChar(36)
+  estudante Estudante? @relation(fields: [estudante_id] , references: [id])
   professor Professor? @relation(fields: [professor_id] , references: [id])
 }
+
 

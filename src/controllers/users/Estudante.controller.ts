@@ -17,7 +17,7 @@ export class AlunoController{
         const file  = request.file as Express.Multer.File;
 
         data.foto = file 
-
+        const count = await prisma.estudante.count();
         data.naturalidade.replace("\n\r","")
         data.enderecos.replace("\n\r","")
         data.contatos.replace("\n\r","")
@@ -56,7 +56,8 @@ export class AlunoController{
             foto : file,
             naturalidade : naturality, 
             contatos : contacts,
-            enderecos : address
+            enderecos : address,
+            numero_processo : count +1
         }
 
         return await service.add(dataCreation)

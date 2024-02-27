@@ -37,7 +37,9 @@ export class TurmaService implements TurmaRepository{
                 id : ano_id
             },
             include : {
-                estudantes : true
+                estudantes : true,
+                ano_academico : true,
+                curso : true
             }
         })
         .then( response => response)

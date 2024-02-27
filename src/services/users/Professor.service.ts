@@ -1,21 +1,21 @@
 import { PrismaClient } from "@prisma/client";
-import EstudanteRepository, { AlunoData, EstudanteDataCreate, EstudanteDataUpdate, ImageData, ResponseData, SearchParamsData } from "../../Repositories/users/Estudante.repository";
+import EstudanteRepository, { AlunoData, EstudanteDataUpdate, ImageData } from "../../Repositories/users/Estudante.repository";
+import professorRepository, { ProfessorData, ProfessorDataCreate, ResponseData, SearchParamsData } from "../../Repositories/users/Professor.Repository";
 
 
 const prisma = new PrismaClient();
 
-export class EstudanteService implements EstudanteRepository{
+export class EstudanteService implements professorRepository{
 
-    public async add(data: EstudanteDataCreate):Promise<EstudanteDataCreate>{
-        const {nome , data_nascimento , turma_id , contatos ,enderecos , naturalidade ,foto, numero_processo} = data;
+    public async add(data: ProfessorDataCreate):Promise<ProfessorDataCreate>{
+        const {nome , data_nascimento , contatos ,enderecos , naturalidade ,foto , } = data;
         const fotoCrete : ImageData = {path : `/files/${foto.filename}`};
 
-        return await prisma.estudante.create( {
+        return await prisma.professor.create( {
             data : {
                 nome ,
                 data_nascimento,
-                turma_id,
-                numero_processo,
+                status : false, 
                 contatos : {
                     createMany :{
                         data:contatos
@@ -43,24 +43,16 @@ export class EstudanteService implements EstudanteRepository{
         .catch( error => error);
     };
 
-    public async update(data: Partial<EstudanteDataUpdate>) : Promise<EstudanteDataCreate>{
+    public async update(data: Partial<EstudanteDataUpdate>) : Promise<ProfessorDataCreate>{
         const {id, nome , data_nascimento , turma_id , contatos ,enderecos , naturalidade} = data;
-        // if( contatos ){
-        //     await prisma.contato.updateMany({
-        //         where : {
-        //             OR : id  contatos.map( contato => contato.id)
-        //         },
 
-        //     })
-        // }
-        return await prisma.estudante.update( {
+        return await prisma.professor.update( {
              where :{
                 id
              },
             data : {
                 nome ,
                 data_nascimento,
-                turma_id,
                 naturalidade : {
                     update : naturalidade
                 },
@@ -85,18 +77,17 @@ export class EstudanteService implements EstudanteRepository{
     public async get(searchParams : Partial<SearchParamsData>) : Promise<ResponseData>{
         const {distrito,municipio_id,rua,turma_id} =  searchParams;
 
-        const count = await prisma.estudante.count();
+        const count = await prisma.professor.count();
         const perPage: number = searchParams.perPage ? Number(searchParams.perPage) : 5;
         const currentPage = searchParams.currentPage  ? Number(searchParams.currentPage) : 1;
         const lastPage = Math.ceil(Number(count)/perPage);
         const nextPage = (currentPage+1)<= lastPage ? currentPage+1: null;
         const previousPage = (currentPage>1) ? currentPage-1  :null
         const jump = (currentPage-1)*perPage;
-        return await prisma.estudante.findMany({
+        return await prisma.professor.findMany({
             skip : jump,
             take : perPage,
             where : {
-                turma : { id : turma_id},
                 endereco : { 
                     some : {
                         distrito,
@@ -107,15 +98,12 @@ export class EstudanteService implements EstudanteRepository{
             },
             include:{
                 naturalidade : true,
-                turma : true
-            },
-            orderBy : {
-                numero_processo : "asc"
+                turmas_professor : true
             }
         })
         .then(response => {
             return {
-                estudantes: response,
+                professores: response,
                 perPage: perPage,
                 previousPage: previousPage,
                 currentPage: currentPage,
@@ -127,19 +115,18 @@ export class EstudanteService implements EstudanteRepository{
         .catch( error =>error)
     };
 
-    public async find (estudante_id: string) : Promise<EstudanteDataCreate>{
-        return await prisma.estudante.findUnique({
+    public async find (professor_id: string) : Promise<ProfessorDataCreate>{
+        return await prisma.professor.findUnique({
             where : {
-                id : estudante_id
+                id : professor_id
             },
             include:{
                 contatos : true,
                 naturalidade : true,
                 endereco:true,
-                turma : {
-                    include :{
-                        curso : true,
-                        ano_academico : true
+                turmas_professor : {
+                    include : {
+                        turma : true
                     }
                 },
                 foto : true
@@ -148,10 +135,10 @@ export class EstudanteService implements EstudanteRepository{
         .catch( error => error);
     };
     
-    public async delete (estudante_id: string):Promise<AlunoData>{
-        return await prisma.estudante.delete( {
+    public async delete (professor_id: string):Promise<ProfessorData>{
+        return await prisma.professor.delete( {
             where : {
-                id : estudante_id
+                id : professor_id
             }
         }).then( response =>response)
         .catch( error =>error)

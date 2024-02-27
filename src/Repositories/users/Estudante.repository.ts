@@ -14,7 +14,7 @@ export type AlunoData = {
 export type EstudanteDataCreate = {
     nome: string,
     data_nascimento: Date,
-    numero_processo? : number,
+    numero_processo : number,
     turma_id: string,
     foto : Express.Multer.File
     createdAt? : Date
