@@ -1703,6 +1703,275 @@
                 }
             }
         },
+        "/professores":{
+            "post":{
+                "tags":["Professor"],
+                "summary":"Adicionar professor",
+                "description":"Adicionar professor",
+                "operationId":"adicionarprofessor",
+                "requestBody":{
+                    "description" :"Criar uma professor",
+                    "content":{
+                        "multipart/form-data" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/ProfessorCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Professor"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200" :{
+                        "description":"criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Professor"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Professor"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "get":{
+                "tags" : ["Professor"],
+                "description" : "rota listar todos as professores",
+                "summary" : "listar professores!",
+                "operationId":"listarprofessor",
+                "parameters":[
+                    {
+                        "in":"query",
+                        "name":"pais_id",
+                        "description":"Id do Pais",
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"nome_pais",
+                        "description":"Nome do Pais",
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"provincia_id",
+                        "description":"Id da província",
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"nome_provincia",
+                        "description":"Nome do Província",
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"currentPage",
+                        "description":"pagina atual",
+                        "schema":{
+                            "type":"integer",
+                            "example":1
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"perPage",
+                        "schema":{
+                            "type":"integer",
+                            "example":5
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/ProfessorResponse"
+                                    }
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/ProfessorResponse"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar professores"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            }
+        },
+        "/professores/{professor_id}":{
+            "get":{
+                "tags":["Professor"],
+                "summary":"Pegar dos dados do professor pelo id",
+                "description":"Pegar dos dados do professor pelo id",
+                "operationId":"listarByIdprofessor",
+                "parameters":[
+                    {
+                        "name":"professor_id",
+                        "in":"path",
+                        "description":"id do professor",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ProfessorDataResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ProfessorDataResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "put":{
+                "tags" : ["Professor"],
+                "description" : "rota atualizar a professor",
+                "summary" : "atualizar a professor",
+                "operationId":"atualizarprofessor",
+                "parameters":[
+                    {
+                        "name":"professor_id",
+                        "in":"path",
+                        "description":"Id do professor",
+                        "required" : true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "description" :"Atualizar  professor",
+                    "content":{
+                        "multipart/form-data" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/ProfessorUpdate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/ProfessorUpdate"
+                            }
+                        },
+                        "application/x-www-urlencoded":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Professor"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200":{
+                        "description":"atualizado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Professor"
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/Professor"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao atualizar município"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Professor"],
+                "summary":"Eliminar a professor pelo id",
+                "description":"Eliminar a professor pelo id",
+                "operationId":"eliminarByIdprofessor",
+                "parameters":[
+                    {
+                        "name":"professor_id",
+                        "in":"path",
+                        "description":"id da professor",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"Eliminado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Professor"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Professor"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
+        },
         "/cursos":{
             "post":{
                 "tags":["Curso"],
@@ -1920,8 +2189,258 @@
                     }
                 }
             }
+        },
+        "/disciplinas":{
+            "post":{
+                "tags":["Disciplinas"],
+                "summary":"Adicionar  Disciplina",
+                "description":"Adicionar  Disciplina",
+                "operationId":"adicionarDisciplina",
+                "requestBody":{
+                    "description" :"Criar Disciplina",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/DisciplinaCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Disciplina"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200" :{
+                        "description":"Pais criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Disciplina"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Disciplina"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "get":{
+                "tags" : ["Disciplinas"],
+                "description" : "listar Disciplinas",
+                "summary" : "listar Disciplinas",
+                "operationId":"listarDisciplina",
+                "parameters":[
+                    {
+                        "in":"query",
+                        "name":"turma_id",
+                        "description":"Id do turma",
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                     {
+                        "in":"query",
+                        "name":"professor_id",
+                        "description":"Id da professor",
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"currentPage",
+                        "description":"pagina atual",
+                        "schema":{
+                            "type":"integer",
+                            "example":1
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"perPage",
+                        "schema":{
+                            "type":"integer",
+                            "example":5
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/DisciplinaResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/DisciplinaResponse"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            }
+        },
+        "/disciplinas/{disciplina_id}":{
+            "get":{
+                "tags":["Disciplinas"],
+                "summary":"Pegar dos dados do disciplina pelo id",
+                "description":"Pegar dos dados do disciplina pelo id",
+                "operationId":"listarByIddisciplina",
+                "parameters":[
+                    {
+                        "name":"disciplina_id",
+                        "in":"path",
+                        "description":"id do disciplina",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/CursoDataResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/CursoDataResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "put":{
+                "tags" : ["Disciplinas"],
+                "description" : "rota atualizar o disciplina",
+                "summary" : "atualizar o disciplina!",
+                "operationId":"atualizardisciplina",
+                "parameters":[
+                    {
+                        "name":"disciplina_id",
+                        "in":"path",
+                        "description":"Id do disciplina",
+                        "required" : true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "description" :"Criar um novo disciplina",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/DisciplinaCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/DisciplinaCreate"
+                            }
+                        },
+                        "application/x-www-urlencoded":{
+                            "schema":{
+                                "$ref":"#/components/schemas/DisciplinaCreate"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Disciplina"
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/Disciplina"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Disciplinas"],
+                "summary":"Eliminar o disciplina pelo id",
+                "description":"Eliminar o disciplina pelo id",
+                "operationId":"eliminarByIddisciplina",
+                "parameters":[
+                    {
+                        "name":"disciplina_id",
+                        "in":"path",
+                        "description":"id do disciplina",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"Eliminado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Disciplina"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Disciplina"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
         }
-
     },
 
     "components" : {
@@ -2666,6 +3185,241 @@
                     }
                 }
             },
+            "Professor":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Luanda"
+                    },
+                    "data_nascimento" : {
+                        "type" : "Date",
+                        "example" :"2024-02-17T13:35:33.795Z"
+                    },
+                    "naturalidade" :{
+                        "type":"object",
+                        "$ref":"#/components/schemas/Naturalidade"
+                    }
+                    ,
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "nome": "Luanda",
+                    "provincia_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "ProfessorCreate":{
+                "required":[
+                    "nome",
+                    "data_nascimento",
+                    "naturalidade",
+                    "contatos",
+                    "enderecos"
+                ],
+                "type" : "object",
+                "properties":{
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Sebastiao Antonio"
+                    },
+                    "data_nascimento" : {
+                        "type" : "Date",
+                        "example" :"2024-02-17T13:35:33.795Z"
+                    },
+                    "foto" :{
+                        "type":"file"
+                    },
+                    "contatos":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/ContatoCreate"
+                    },
+                    "naturalidade":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/NaturalidadeCreate"
+                    },
+                    "enderecos":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/EnderecoCreate"
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda",
+                    "provincia_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                }
+            },
+            "ProfessorUpdate":{
+                "required":[
+                    "id"
+                ],
+                "type" : "object",
+                "properties":{
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Sebastiao Antonio"
+                    },
+                    "data_nascimento" : {
+                        "type" : "Date",
+                        "example" :"2024-02-17T13:35:33.795Z"
+                    }
+                    ,
+                    "status":{
+                        "type":"enum"
+                    },
+                    "foto":{
+                        "type":"file"
+                    },
+                    "contatos":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/ContatoCreate"
+                    },
+                    "naturalidade":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/NaturalidadeCreate"
+                    },
+                    "enderecos":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/EnderecoCreate"
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda",
+                    "provincia_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                }
+            },
+            "ProfessorResponse":{
+                "type" : "object",
+                "properties":{
+                    "professores":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Professor"
+                        }
+                    },
+                    "perPage":{
+                        "type":"integer",
+                        "example":4
+                    },
+                    "previousPage":{
+                        "type":"integer",
+                        "example":1
+                    },
+                    "currentPage": {
+                        "type":"integer",
+                        "example":1
+                    },
+                    "nextPage":{
+                        "type":"integer",
+                        "example":1
+                    },
+                    "lastPage": {
+                        "type":"integer",
+                        "example":4
+                    },
+                    "total": {
+                        "type":"integer",
+                        "example":7
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda",
+                    "pais_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                }
+            },
+            "ProfessorDataResponse":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Sebastiao Antonio"
+                    },
+                    "data_nascimento" : {
+                        "type" : "Date",
+                        "example" :"2024-02-17T13:35:33.795Z"
+                    },
+                    "contatos":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Contato"
+                        }
+                    },
+                    "naturalidade":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/Naturalidade"
+                    },
+                    "enderecos":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Endereco"
+                        }
+                    },
+                    "foto":{
+                        "type" : "object",
+                        "$ref" :"#/components/schemas/Imagem"
+                    },
+                    "createdAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
             "AnoAcademico":{
                 "type" : "object",
                 "properties":{
@@ -3167,6 +3921,156 @@
                 },
                 "xml" : {
                     "name": "País"
+                }
+            },
+            "Disciplina":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Matemática"
+                    },
+                    "carga" :{
+                        "type":"integer",
+                        "example":45
+                    }
+                    ,
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "nome": "Luanda",
+                    "provincia_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "DisciplinaCreate":{
+                "required":[
+                    "nome",
+                    "carga"
+                ],
+                "type" : "object",
+                "properties":{
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Matemática"
+                    },
+                    "carga" :{
+                        "type":"integer",
+                        "example":45
+                    }
+                }
+            },
+            "DisciplinaResponse":{
+                "type" : "object",
+                "properties":{
+                    "disciplinas":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Disciplina"
+                        }
+                    },
+                    "perPage":{
+                        "type":"integer",
+                        "example":4
+                    },
+                    "previousPage":{
+                        "type":"integer",
+                        "example":1
+                    },
+                    "currentPage": {
+                        "type":"integer",
+                        "example":1
+                    },
+                    "nextPage":{
+                        "type":"integer",
+                        "example":1
+                    },
+                    "lastPage": {
+                        "type":"integer",
+                        "example":4
+                    },
+                    "total": {
+                        "type":"integer",
+                        "example":7
+                    }
+                },
+                "xml" : {
+                    "name": "Luanda",
+                    "pais_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                }
+            },
+            "DisciplinaDataResponse":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Matemática"
+                    },
+                    "carga" :{
+                        "type":"integer",
+                        "example":45
+                    },
+                    "createdAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
                 }
             },
             "Naturalidade":{

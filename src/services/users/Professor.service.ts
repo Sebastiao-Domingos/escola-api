@@ -1,11 +1,11 @@
 import { PrismaClient } from "@prisma/client";
-import EstudanteRepository, { AlunoData, EstudanteDataUpdate, ImageData } from "../../Repositories/users/Estudante.repository";
+import { EstudanteDataUpdate, ImageData } from "../../Repositories/users/Estudante.repository";
 import professorRepository, { ProfessorData, ProfessorDataCreate, ResponseData, SearchParamsData } from "../../Repositories/users/Professor.Repository";
 
 
 const prisma = new PrismaClient();
 
-export class EstudanteService implements professorRepository{
+export class ProfessorService implements professorRepository{
 
     public async add(data: ProfessorDataCreate):Promise<ProfessorDataCreate>{
         const {nome , data_nascimento , contatos ,enderecos , naturalidade ,foto , } = data;
@@ -15,7 +15,6 @@ export class EstudanteService implements professorRepository{
             data : {
                 nome ,
                 data_nascimento,
-                status : false, 
                 contatos : {
                     createMany :{
                         data:contatos
@@ -84,6 +83,7 @@ export class EstudanteService implements professorRepository{
         const nextPage = (currentPage+1)<= lastPage ? currentPage+1: null;
         const previousPage = (currentPage>1) ? currentPage-1  :null
         const jump = (currentPage-1)*perPage;
+
         return await prisma.professor.findMany({
             skip : jump,
             take : perPage,

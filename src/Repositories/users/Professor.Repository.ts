@@ -43,7 +43,6 @@ export type ProfessorDataCreate = {
 export type ProfessorDataCreateReceived = {
   nome: string,
   data_nascimento: Date,
-  turma_id: string,
   foto : Express.Multer.File
   createdAt? : Date
   updatedAt? : Date
@@ -61,7 +60,6 @@ export type ProfessorDataUpdate = {
   naturalidade: NaturalidadeDate,
   enderecos:EnderecoDate[]
 }
-
 
 export type ResponseData ={
     professores : ProfessorDataCreate[]

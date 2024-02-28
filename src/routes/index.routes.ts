@@ -10,6 +10,8 @@ import { turma_routes } from "./school/Turma.routes";
 import { curso_routes } from "./school/Curso.routes";
 import { departamento_routes } from "./school/Departamento.routes";
 import { upload } from "../middlewares/multer.middleware";
+import { professores_routes } from "./users/Professor.routes";
+import { disciplinas_routes } from "./school/Disciplinas.routes";
 
 const routes = express();
 
@@ -24,6 +26,8 @@ routes.use(anoAcademico_routes)
 routes.use(turma_routes)
 routes.use(curso_routes)
 routes.use(departamento_routes)
+routes.use(professores_routes)
+routes.use(disciplinas_routes)
 
 routes.post("/upload" , upload.single("file") , (req, res) =>{
     return res.json(req.file?.originalname)
