@@ -2440,6 +2440,252 @@
                     }
                 }
             }
+        },
+        "/selecionar_professor":{
+            "post":{
+                "tags":["Selecionar Professor"],
+                "summary":"Adicionar  Selecionar Professor",
+                "description":"Adicionar  Selecionar Professor",
+                "operationId":"adicionarSelecionarProfessor",
+                "requestBody":{
+                    "description" :"Criar SelecionarProfessor",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/SelecionarProfessorCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/SelecionarProfessor"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200" :{
+                        "description":"Pais criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/SelecionarProfessor"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/SelecionarProfessor"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "get":{
+                "tags" : ["Selecionar Professor"],
+                "description" : "listar Selecionar professor",
+                "summary" : "listar selecionar professor",
+                "operationId":"listarSelecionarProfessor",
+                "parameters":[
+                    {
+                        "in":"query",
+                        "name":"turma_id",
+                        "description":"Id do turma",
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                     {
+                        "in":"query",
+                        "name":"professor_id",
+                        "description":"Id da professor",
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"currentPage",
+                        "description":"pagina atual",
+                        "schema":{
+                            "type":"integer",
+                            "example":1
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"perPage",
+                        "schema":{
+                            "type":"integer",
+                            "example":5
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/DisciplinaResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/DisciplinaResponse"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            }
+        },
+        "/selecionar_professor/{disciplina_id}":{
+            "get":{
+                "tags":["Disciplinas"],
+                "summary":"Pegar dos dados do disciplina pelo id",
+                "description":"Pegar dos dados do disciplina pelo id",
+                "operationId":"listarByIddisciplina",
+                "parameters":[
+                    {
+                        "name":"disciplina_id",
+                        "in":"path",
+                        "description":"id do disciplina",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/CursoDataResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/CursoDataResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "put":{
+                "tags" : ["Selecionar Professor"],
+                "description" : "rota atualizar o disciplina",
+                "summary" : "atualizar o disciplina!",
+                "operationId":"atualizardisciplina",
+                "parameters":[
+                    {
+                        "name":"seleionar_professor_id",
+                        "in":"path",
+                        "description":"Id do selecionar porfessor",
+                        "required" : true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "description" :"Criar um novo disciplina",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/SelecionarProfessorCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/SelecionarProfessorCreate"
+                            }
+                        },
+                        "application/x-www-urlencoded":{
+                            "schema":{
+                                "$ref":"#/components/schemas/SelecionarProfessorCreate"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/SelecionarProfessor"
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/SelecionarProfessor"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Selecionar Professor"],
+                "summary":"Eliminar oselecionarProfessor pelo id",
+                "description":"Eliminar oselecionarProfessor pelo id",
+                "operationId":"eliminarByIdselecionarProfessor",
+                "parameters":[
+                    {
+                        "name":"seleionar_professor_id",
+                        "in":"path",
+                        "description":"id do selecionarProfessor",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"Eliminado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Eliminado"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
         }
     },
 
@@ -4494,6 +4740,128 @@
                     "name": "País"
                 }
             },
+            "SelecionarProfessor":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "professor_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "disciplina_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "turma_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "SelecionarProfessorDataResponse":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "professor_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "disciplina_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "turma_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "createdAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "SelecionarProfessorCreate":{
+                "required":[
+                    "disciplina_id",
+                    "turma_id",
+                    "provincia_id"
+                ],
+                "type" : "object",
+                "properties":{
+                    "professor_id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "disciplina_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "turma_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    }
+                }
+            },
             "Imagem":{
                 "type" : "object",
                 "properties":{
@@ -4513,6 +4881,36 @@
                         "type":"Date",
                         "example":"2024-02-17T13:35:33.795Z"
                     } 
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "Eliminado":{
+                "type" : "object",
+                "properties":{
+                    "messagem" : {
+                        "type" : "string",
+                        "example" : "Eliminado com sucesso!"
+                    }
                 },
                 "xml" : {
                     "name": "País"

@@ -98,7 +98,6 @@ export class ProfessorService implements professorRepository{
             },
             include:{
                 naturalidade : true,
-                turmas_professor : true
             }
         })
         .then(response => {
@@ -126,7 +125,8 @@ export class ProfessorService implements professorRepository{
                 endereco:true,
                 turmas_professor : {
                     include : {
-                        turma : true
+                        turma : true,
+                        disciplina : true
                     }
                 },
                 foto : true
