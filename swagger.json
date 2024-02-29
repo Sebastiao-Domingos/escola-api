@@ -1562,6 +1562,48 @@
                 }
             }
         },
+        "/estudantes/turma/{turma_id}":{
+            "get":{
+                "tags":["Estudante"],
+                "summary":"Pegar estudantes da turma",
+                "description":"Pegar estudantes da turma",
+                "operationId":"listarByIdEstudanteTurma",
+                "parameters":[
+                    {
+                        "name":"turma_id",
+                        "in":"path",
+                        "description":"id da turma",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/EstudanteResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/EstudanteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
+        },
         "/estudantes/{estudante_id}":{
             "get":{
                 "tags":["Estudante"],
@@ -1827,6 +1869,48 @@
                     },
                     "401":{
                         "description":"Unauthorized"
+                    }
+                }
+            }
+        },
+        "/professores/turma/{turma_id}":{
+            "get":{
+                "tags":["Professor"],
+                "summary":"Pegar professores da turma",
+                "description":"Pegar professores da turma",
+                "operationId":"listarByIdprofessorTurma",
+                "parameters":[
+                    {
+                        "name":"turma_id",
+                        "in":"path",
+                        "description":"id da turma",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ProfessorDataResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ProfessorDataResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
                     }
                 }
             }
@@ -2300,6 +2384,48 @@
                 }
             }
         },
+        "/disciplinas/turma/{turma_id}":{
+            "get":{
+                "tags":["Disciplinas"],
+                "summary":"Pegar disciplinas da turma",
+                "description":"Pegar disciplinas da turma",
+                "operationId":"listarByIdDisciplinaTurma",
+                "parameters":[
+                    {
+                        "name":"turma_id",
+                        "in":"path",
+                        "description":"id da turma",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Displina"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Displina"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
+        },
         "/disciplinas/{disciplina_id}":{
             "get":{
                 "tags":["Disciplinas"],
@@ -2553,7 +2679,7 @@
         },
         "/selecionar_professor/{disciplina_id}":{
             "get":{
-                "tags":["Disciplinas"],
+                "tags":["Selecionar Professor"],
                 "summary":"Pegar dos dados do disciplina pelo id",
                 "description":"Pegar dos dados do disciplina pelo id",
                 "operationId":"listarByIddisciplina",

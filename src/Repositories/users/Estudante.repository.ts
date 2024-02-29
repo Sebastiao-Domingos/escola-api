@@ -1,4 +1,5 @@
 import { Multer } from "multer"
+import { DeleteSms } from "../localiteis/Pais.repository"
 
 
 export type AlunoData = {
@@ -143,6 +144,7 @@ export default interface EstudanteRepository {
     add:(data : EstudanteDataCreate) => Promise<EstudanteDataCreate>
     update:(data:Partial<EstudanteDataUpdate>) => Promise<EstudanteDataCreate>
     get:(searchParams : Partial<SearchParamsData>) => Promise<ResponseData>
+    getEstudantesTurma:(turma_id : string) => Promise<EstudanteDataCreate>
     find :(aluno_id:string) => Promise<EstudanteDataCreate>
-    delete:(aluno_id : string ) => Promise<AlunoData>
+    delete:(aluno_id : string ) => Promise<DeleteSms>
 }

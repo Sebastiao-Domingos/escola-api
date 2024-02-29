@@ -35,6 +35,7 @@ export default interface DisciplinaRepository {
     add : (data : DisciplinaCreateData) => Promise<DisciplinaData>;
     update : (data : Partial<DisciplinaCreateData>) => Promise<DisciplinaData>;
     get : ( params : Partial<SearchParamsDataDisciplina>) => Promise<ResponseDataDisciplina>,
+    getDisciplinasTurma : ( turma_id : string) => Promise<DisciplinaData>,
     find : ( disciplina_id: string ) => Promise<DisciplinaData>
     delete : ( disciplina_id: string ) => Promise<DeleteSms | Error>
 }

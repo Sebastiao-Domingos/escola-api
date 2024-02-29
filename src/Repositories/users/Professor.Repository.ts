@@ -84,6 +84,7 @@ export default interface professorRepository {
     add:(data : ProfessorDataCreate) => Promise<ProfessorDataCreate>
     update:(data:Partial<ProfessorDataUpdate>) => Promise<ProfessorDataCreate>
     get:(searchParams : Partial<SearchParamsData>) => Promise<ResponseData>
+    getProfessoresTurma:(turma_id : string) => Promise<ProfessorData>
     find :(aluno_id:string) => Promise<ProfessorData>
     delete:(aluno_id : string ) => Promise<ProfessorData>
 }

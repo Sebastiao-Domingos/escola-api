@@ -88,6 +88,29 @@ export class DisciplinaController{
         })
     }
 
+    public async getDisciplinasTurma( request :Request , response : Response) {
+        const turma_id : string = request.params.id;
+
+        if(!validate(turma_id)){
+            response.status(400).json( new BadRequestError("Id invlido!"))
+        }
+
+        const turma = await prisma.turma.findUnique( {where: {id : turma_id}}).then( res => res);
+
+        if(!turma){
+            response.status(400).json( new BadRequestError("Não existe esta turma"))
+        }
+
+        return await service.getDisciplinasTurma(turma_id)
+        .then( resp => {
+            return response.status(200).json(resp)
+        })
+        .catch( error => {
+            return response.status(400).json(error)
+        })
+    }
+
+
     /**
      * delete
      */

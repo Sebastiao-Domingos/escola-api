@@ -149,6 +149,28 @@ export class ProfessorController{
         })
     }
 
+    public async getProfessoresTurma( request :Request , response : Response) {
+        const id : string = request.params.id;
+
+        if(!validate(id)){
+            response.status(400).json( new BadRequestError("Id invlido!"))
+        }
+
+        const turma = await prisma.turma.findUnique( {where: {id : id}}).then( res => res);
+
+        if(!turma){
+            response.status(400).json( new BadRequestError("Não existe esta turma"))
+        }
+
+        return await service.getProfessoresTurma(id)
+        .then( resp => {
+            return response.status(200).json(resp)
+        })
+        .catch( error => {
+            return response.status(400).json(error)
+        })
+    }
+
     /**
      * find
      */

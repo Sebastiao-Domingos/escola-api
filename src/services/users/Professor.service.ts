@@ -134,7 +134,26 @@ export class ProfessorService implements professorRepository{
         }).then( response =>response)
         .catch( error => error);
     };
-    
+
+    public async getProfessoresTurma (turma_id: string) : Promise<ProfessorData>{
+        return await prisma.professor.findMany({
+            where : {
+                turmas_professor : {
+                    some : {
+                        turma_id 
+                    }
+                }
+            },
+            include:{
+                contatos : true,
+                naturalidade : true,
+                endereco:true,
+                foto : true
+            }
+        }).then( response =>response)
+        .catch( error => error);
+    };
+
     public async delete (professor_id: string):Promise<ProfessorData>{
         return await prisma.professor.delete( {
             where : {

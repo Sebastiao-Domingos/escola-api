@@ -62,6 +62,9 @@ export class DisciplinaService implements DisciplinaRepository{
         })
         .catch( error =>error)
     };
+
+
+    //getDisciplinasTurma
     public async find (disciplina_id: string) : Promise<DisciplinaData>{
         return await prisma.disciplina.findUnique( {
             where : {
@@ -71,6 +74,27 @@ export class DisciplinaService implements DisciplinaRepository{
                 turma_professor : {
                     include :{
                         turma : true,
+                        professor : true
+                    }
+                }
+            }
+        })
+        .then( response => response)
+        .catch( error => error)
+    };
+
+    public async getDisciplinasTurma (turma_id: string) : Promise<DisciplinaData>{
+        return await prisma.disciplina.findMany( {
+            where : {
+                turma_professor : {
+                    some : {
+                        turma_id : turma_id
+                    }
+                }
+            },
+            include : {
+                turma_professor : {
+                    include :{
                         professor : true
                     }
                 }

@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import EstudanteRepository, { AlunoData, EstudanteDataCreate, EstudanteDataUpdate, ImageData, ResponseData, SearchParamsData } from "../../Repositories/users/Estudante.repository";
+import { DeleteSms } from "../../Repositories/localiteis/Pais.repository";
 
 
 const prisma = new PrismaClient();
@@ -147,13 +148,30 @@ export class EstudanteService implements EstudanteRepository{
         }).then( response =>response)
         .catch( error => error);
     };
+
+    public async getEstudantesTurma (turma_id: string) : Promise<EstudanteDataCreate>{
+        return await prisma.estudante.findMany({
+            where : {
+                turma : {
+                    id : turma_id
+                }
+            },
+            include:{
+                contatos : true,
+                naturalidade : true,
+                endereco:true,
+                foto : true
+            }
+        }).then( response =>response)
+        .catch( error => error);
+    }
     
-    public async delete (estudante_id: string):Promise<AlunoData>{
+    public async delete (estudante_id: string):Promise<DeleteSms>{
         return await prisma.estudante.delete( {
             where : {
                 id : estudante_id
             }
-        }).then( response =>response)
+        }).then( () => {sms : "Eliminado com sucesso"})
         .catch( error =>error)
     };
 }

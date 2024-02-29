@@ -12,6 +12,7 @@ professores_routes.post(BASE_PATH ,upload.single("foto"), controller.create)
 professores_routes.put(`${BASE_PATH}/:id` , controller.update)
 professores_routes.get(BASE_PATH ,controller.get )
 professores_routes.get(`${BASE_PATH}/:id` ,controller.find)
+professores_routes.get(`${BASE_PATH}/turma/:id` ,controller.getProfessoresTurma)
 professores_routes.delete(`${BASE_PATH}/:id` ,controller.delete )
 
 export {professores_routes}
