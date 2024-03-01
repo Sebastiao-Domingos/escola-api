@@ -1487,8 +1487,7 @@
                         "name":"pais_id",
                         "description":"Id do Pais",
                         "schema":{
-                            "type":"string",
-                            "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                            "type":"string"
                         }
                     },
                     {
@@ -1505,8 +1504,7 @@
                         "name":"provincia_id",
                         "description":"Id da província",
                         "schema":{
-                            "type":"string",
-                            "example":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                            "type":"string"
                         }
                     },
                     {
@@ -1586,6 +1584,51 @@
                             "application/json":{
                                 "schema":{
                                     "$ref":"#/components/schemas/EstudanteResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/EstudanteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
+        },
+        "/estudantes/disciplinas/{estudante_id}":{
+            "get":{
+                "tags":["Estudante"],
+                "summary":"Pegar disciplinas do estudante",
+                "description":"Pegar disciplinas do estudante",
+                "operationId":"listarByIdDisciplinasEstudante",
+                "parameters":[
+                    {
+                        "name":"estudante_id",
+                        "in":"path",
+                        "description":"id do estudante",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type" : "array",
+                                    "items" : {
+                                        "$ref":"#/components/schemas/Disciplina"
+                                    }
                                 }
                             },
                             "application/hml":{
@@ -1741,6 +1784,83 @@
                     },
                     "422":{
                         "description":"excepção de validação"
+                    }
+                }
+            }
+        },
+        "/notas":{
+            "post":{
+                "tags":["Notas"],
+                "summary":"Adicionar notas",
+                "description":"Adicionar notas",
+                "operationId":"adicionarnotas",
+                "requestBody":{
+                    "description" :"Criar uma notas",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/NotaCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/NotaCreate"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200" :{
+                        "description":"criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Nota"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Nota"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "get":{
+                "tags" : ["Notas"],
+                "description" : "rota listar todos as notas",
+                "summary" : "listar notas!",
+                "operationId":"listarNotas",
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/Nota"
+                                    }
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/Nota"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar notas"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
                     }
                 }
             }
@@ -2338,6 +2458,14 @@
                         "in":"query",
                         "name":"professor_id",
                         "description":"Id da professor",
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"estudante_id",
+                        "description":"id da estudante",
                         "schema":{
                             "type":"string"
                         }
@@ -4858,6 +4986,135 @@
                         "example" : "Informática"
                     },
                     "departamento_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                }
+            },
+            "Nota":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "valor":{
+                        "type" : "Float",
+                        "example" : "5.5"
+                    },
+                    "estudante_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "disciplina_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "NotaDataResponse":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Informática"
+                    },
+                    "departamento_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "createdAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "turmas":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Turma"
+                        }
+                    },
+                    "departamento":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/Departamento"
+                    }
+                },
+                "xml" : {
+                    "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "NotaCreate":{
+                "required":[
+                    "valor", "disciplina_id","estudante_id"
+                ],
+                "type" : "object",
+                "properties":{
+                    "valor":{
+                        "type" : "Decimal",
+                        "example" : 5.5
+                    },
+                    "estudante_id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "disciplina_id" : {
                         "type" : "string",
                         "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
                     }

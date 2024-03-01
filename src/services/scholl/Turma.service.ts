@@ -31,15 +31,20 @@ export class TurmaService implements TurmaRepository{
         .then( response => response)
         .catch( error => error)
     };
-    public async find (ano_id: string) : Promise<TurmaData>{
+    public async find (id: string) : Promise<TurmaData>{
         return await prisma.turma.findUnique( {
             where : {
-                id : ano_id
+                id : id
             },
             include : {
                 estudantes : true,
                 ano_academico : true,
-                curso : true
+                curso : true,
+                turma_professor : {
+                    include : {
+                        disciplina :true
+                    }
+                }
             }
         })
         .then( response => response)

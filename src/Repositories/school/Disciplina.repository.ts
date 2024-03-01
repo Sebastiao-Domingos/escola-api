@@ -28,7 +28,8 @@ export type SearchParamsDataDisciplina = {
     perPage : number
     currentPage : number
     turma_id :string,
-    professor_id: string
+    professor_id: string,
+    estudante_id : string
 }
 
 export default interface DisciplinaRepository {

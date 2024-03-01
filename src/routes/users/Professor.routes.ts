@@ -1,6 +1,6 @@
 
 import express from "express"
-import { AlunoController } from "../../controllers/users/Estudante.controller";
+import { EstudanteController } from "../../controllers/users/Estudante.controller";
 import { upload } from "../../middlewares/multer.middleware";
 import { ProfessorController } from "../../controllers/users/Professor.controllers";
 

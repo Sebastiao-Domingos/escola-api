@@ -13,6 +13,7 @@ import { upload } from "../middlewares/multer.middleware";
 import { professores_routes } from "./users/Professor.routes";
 import { disciplinas_routes } from "./school/Disciplinas.routes";
 import { escolher_professor_routes } from "./school/EscolherProfessor.routes";
+import { notas_routes } from "./school/classroom/Nota.routes";
 
 const routes = express();
 
@@ -30,6 +31,7 @@ routes.use(departamento_routes)
 routes.use(professores_routes)
 routes.use(disciplinas_routes)
 routes.use(escolher_professor_routes)
+routes.use(notas_routes)
 
 routes.post("/upload" , upload.single("file") , (req, res) =>{
     return res.json(req.file?.originalname)

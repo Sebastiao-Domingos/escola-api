@@ -28,7 +28,7 @@ export class DisciplinaService implements DisciplinaRepository{
     };
 
     public async get(parmas : Partial<SearchParamsDataDisciplina>) : Promise<ResponseDataDisciplina>{
-        const { professor_id ,turma_id } =  parmas;
+        const { professor_id ,turma_id, estudante_id } =  parmas;
         const count = await prisma.disciplina.count();
         const perPage: number = parmas.perPage ? Number(parmas.perPage) : 5;
         const currentPage = parmas.currentPage  ? Number(parmas.currentPage) : 1;
@@ -37,17 +37,69 @@ export class DisciplinaService implements DisciplinaRepository{
         const previousPage = (currentPage>1) ? currentPage-1  :null
         const jump = (currentPage-1)*perPage;
 
-        return await prisma.disciplina.findMany({
-            skip : jump,
-            take : perPage,
-            where : {
-                turma_professor : {
-                    every : {
-                        professor_id : professor_id,
-                        turma_id : turma_id
+
+        if( professor_id || turma_id ){
+            return await prisma.disciplina.findMany({
+                skip : jump,
+                take : perPage,
+                where : {
+                    turma_professor : {
+                        some : {
+                                professor_id : professor_id,
+                                turma_id : turma_id 
+                        }
                     }
                 }
-            }
+            })
+            .then(response => {
+                return {
+                    disciplinas : response,
+                    perPage: perPage,
+                    previousPage: previousPage,
+                    currentPage: currentPage,
+                    nextPage: nextPage,
+                    lastPage: lastPage,
+                    total: count
+                }
+            })
+            .catch( error =>error)
+        }
+
+        if( estudante_id){
+            return await prisma.disciplina.findMany({
+                skip : jump,
+                take : perPage,
+                where : {
+                    turma_professor : {
+                        some : {
+                            turma : {
+                                estudantes : {
+                                    some : {
+                                        id : estudante_id
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+            .then(response => {
+                return {
+                    disciplinas : response,
+                    perPage: perPage,
+                    previousPage: previousPage,
+                    currentPage: currentPage,
+                    nextPage: nextPage,
+                    lastPage: lastPage,
+                    total: count
+                }
+            })
+            .catch( error =>error)
+        }
+        
+        return await prisma.disciplina.findMany({
+            skip : jump,
+            take : perPage
         })
         .then(response => {
             return {

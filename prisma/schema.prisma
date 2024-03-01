@@ -17,7 +17,9 @@ model Administrador {
   id    String   @unique @default(uuid())
   email String  @unique
   nome  String
-  senha String
+  senha String 
+  createAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())
 }
 
 // This is your Prisma schema file,
@@ -62,7 +64,7 @@ model Endereco {
   municipio Municipio @relation(fields: [municipio_id] , references: [id], onDelete: Cascade , onUpdate: Cascade)
   estudante Estudante? @relation(fields: [estudante_id],references: [id] , onDelete:  Cascade , onUpdate: Cascade)
   professor Professor? @relation(fields: [professor_id] , references: [id] ,onDelete: Cascade ,onUpdate: Cascade)
-  createAt DateTime @default(now()) 
+  createdAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
 }
 
@@ -76,7 +78,8 @@ model Estudante {
   foto Imagens?
   endereco Endereco[]
   contatos Contato[]
-  createAt DateTime @default(now()) 
+  notas Nota[]
+  createdAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
   turma Turma? @relation(fields: [turma_id] ,references: [id] , onDelete: Cascade , onUpdate: Cascade)
 }
@@ -88,6 +91,8 @@ model Naturalidade {
   estudante_id String? @unique @db.VarChar(36)
   professor Professor? @relation(fields: [professor_id] , references: [id])
   professor_id String? @unique @db.VarChar(36)
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())
 }
 
 model Contato {
@@ -98,7 +103,7 @@ model Contato {
   estudante Estudante? @relation(fields: [estudante_id] , references: [id], onDelete: Cascade , onUpdate:  Cascade)
   professor_id String? @db.VarChar(36)
   professor Professor? @relation(fields: [professor_id ], references: [id], onDelete: Cascade , onUpdate:  Cascade)
-  createAt DateTime @default(now()) 
+  createdAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
 }
 
@@ -112,6 +117,8 @@ model Turma {
   turma_professor TurmaProfessor[]
   ano_academico Ano_academico @relation(fields: [ano_academico_id] , references: [id] , onDelete: Cascade , onUpdate: Cascade)
   curso Curso @relation(fields: [curso_id] , references: [id] , onDelete: Cascade, onUpdate: Cascade)
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())
 }
 
 model Ano_academico {
@@ -128,6 +135,8 @@ model Curso {
   departamento_id String? @db.VarChar(36) @unique
   turmas Turma[]
   departamento Departamento? @relation(fields: [departamento_id] , references: [id])
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())
 }
 
 model Departamento {
@@ -135,7 +144,7 @@ model Departamento {
   codigo String @unique
   nome String
   cursos Curso?
-  createAt DateTime @default(now()) 
+  createdAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
 }
 
@@ -149,7 +158,7 @@ model Professor {
   endereco Endereco[]
   contatos Contato[]
   turmas_professor TurmaProfessor[]
-  createAt DateTime @default(now()) 
+  createdAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
 }
 
@@ -166,6 +175,8 @@ model TurmaProfessor {
   professor Professor @relation(fields: [professor_id],references: [id])
   turma Turma @relation(fields: [turma_id] , references: [id])
   disciplina Disciplina @relation(fields: [disciplina_id] , references: [id])
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())
 }
 
 model Disciplina {
@@ -173,6 +184,9 @@ model Disciplina {
   nome String
   carga Int
   turma_professor TurmaProfessor[]
+  notas Nota[]
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())
 }
 
 model Imagens {
@@ -182,6 +196,19 @@ model Imagens {
   professor_id String? @unique @db.VarChar(36)
   estudante Estudante? @relation(fields: [estudante_id] , references: [id])
   professor Professor? @relation(fields: [professor_id] , references: [id])
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())
 }
 
+
+model Nota {
+  id String @unique @default(uuid()) @db.VarChar(36) @id
+  valor Decimal @default(0.0)
+  disciplina_id String @db.VarChar(36)
+  estudante_id String @db.VarChar(36)
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())
+  estudante Estudante @relation(fields: [estudante_id] , references: [id])
+  disciplina Disciplina @relation(fields: [disciplina_id], references: [id])
+}
 

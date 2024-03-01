@@ -8,7 +8,7 @@ import { Naturalidade, PrismaClient } from "@prisma/client";
 const service = new EstudanteService();
 
 const prisma = new PrismaClient();
-export class AlunoController{
+export class EstudanteController{
     /**
      * create
      */
@@ -192,6 +192,50 @@ export class AlunoController{
         }
 
         return await service.getEstudantesTurma(id)
+        .then( resp => {
+            return response.status(200).json(resp)
+        })
+        .catch( error => {
+            return response.status(400).json(error)
+        })
+    }
+
+    public async getDisciplinasEstudante( request :Request , response : Response) {
+        const id : string = request.params.id;
+
+        if(!validate(id)){
+            response.status(400).json( new BadRequestError("Id invlido!"))
+        }
+
+        const estudante = await prisma.estudante.findUnique( {where: {id }}).then( res => res);
+
+        if(!estudante){
+            response.status(400).json( new BadRequestError("Não existe este estudante"))
+        }
+
+        return await service.getDisciplinasEstudante(id)
+        .then( resp => {
+            return response.status(200).json(resp)
+        })
+        .catch( error => {
+            return response.status(400).json(error)
+        })
+    }
+
+    public async getNotasEstudante( request :Request , response : Response) {
+        const id : string = request.params.id;
+
+        if(!validate(id)){
+            response.status(400).json( new BadRequestError("Id invlido!"))
+        }
+
+        const estudante = await prisma.estudante.findUnique( {where: {id }}).then( res => res);
+
+        if(!estudante){
+            response.status(400).json( new BadRequestError("Não existe este estudante"))
+        }
+
+        return await service.getNotasEstudante(id)
         .then( resp => {
             return response.status(200).json(resp)
         })

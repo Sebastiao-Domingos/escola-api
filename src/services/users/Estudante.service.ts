@@ -1,6 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { Disciplina, PrismaClient } from "@prisma/client";
 import EstudanteRepository, { AlunoData, EstudanteDataCreate, EstudanteDataUpdate, ImageData, ResponseData, SearchParamsData } from "../../Repositories/users/Estudante.repository";
 import { DeleteSms } from "../../Repositories/localiteis/Pais.repository";
+import { NotaCreateData } from "../../Repositories/school/classroom/Nota.repository";
 
 
 const prisma = new PrismaClient();
@@ -165,6 +166,31 @@ export class EstudanteService implements EstudanteRepository{
         }).then( response =>response)
         .catch( error => error);
     }
+
+    public async getNotasEstudante (estudante_id: string) : Promise<NotaCreateData[]>{
+        return await prisma.nota.findMany({
+            where : {
+                estudante : {
+                    id : estudante_id
+                }
+            }
+        }).then( response =>response)
+        .catch( error => error);
+    }
+    
+    public async getDisciplinasEstudante (estudante_id: string) : Promise<Disciplina[]>{
+        return await prisma.disciplina.findMany({
+            where : {
+                notas: {
+                    some : {
+                        estudante_id
+                    }
+                }
+            }
+        }).then( response =>response)
+        .catch( error => error);
+    }
+    
     
     public async delete (estudante_id: string):Promise<DeleteSms>{
         return await prisma.estudante.delete( {

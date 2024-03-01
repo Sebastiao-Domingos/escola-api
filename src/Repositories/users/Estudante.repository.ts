@@ -1,5 +1,7 @@
 import { Multer } from "multer"
 import { DeleteSms } from "../localiteis/Pais.repository"
+import { NotaCreateData } from "../school/classroom/Nota.repository"
+import { Disciplina } from "@prisma/client"
 
 
 export type AlunoData = {
@@ -145,6 +147,8 @@ export default interface EstudanteRepository {
     update:(data:Partial<EstudanteDataUpdate>) => Promise<EstudanteDataCreate>
     get:(searchParams : Partial<SearchParamsData>) => Promise<ResponseData>
     getEstudantesTurma:(turma_id : string) => Promise<EstudanteDataCreate>
+    getNotasEstudante:(estudante_id: string) => Promise<NotaCreateData[]>
+    getDisciplinasEstudante:(estudante_id: string) => Promise<Disciplina[]>
     find :(aluno_id:string) => Promise<EstudanteDataCreate>
     delete:(aluno_id : string ) => Promise<DeleteSms>
 }
