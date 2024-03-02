@@ -16,12 +16,16 @@ import { escolher_professor_routes } from "./school/EscolherProfessor.routes";
 import { notas_routes } from "./school/classroom/Nota.routes";
 import { administradores_routes } from "./users/Administrador.routes";
 import { session_routes } from "./session/Session.routes";
+import { authMiddleware } from "../middlewares/Auth.moddleware";
 
 const routes = express();
 
 routes.use( express.json());
 routes.use("/files" , express.static("public/uploads"))
 routes.use("/api-docs", SwaggerUi.serve , SwaggerUi.setup(swaggerDocs))
+routes.use(session_routes)
+
+routes.use(authMiddleware)
 routes.use(estudantes_routes)
 routes.use(pais_routes)
 routes.use(provincia_routes)
@@ -35,7 +39,6 @@ routes.use(disciplinas_routes)
 routes.use(escolher_professor_routes)
 routes.use(notas_routes)
 routes.use(administradores_routes)
-routes.use(session_routes)
 
 routes.post("/upload" , upload.single("file") , (req, res) =>{
     return res.json(req.file?.originalname)

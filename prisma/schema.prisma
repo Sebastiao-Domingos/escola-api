@@ -18,6 +18,7 @@ model Administrador {
   nome  String
   senha String 
   data_nascimento DateTime
+  tipo String @default("normal")
   naturalidade Naturalidade?
   foto Imagens?
   endereco Endereco[]

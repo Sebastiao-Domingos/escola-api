@@ -41,8 +41,6 @@ export class SessionController {
 
         const respon  = service.logIn({id : getUser[0].id , nome : getUser[0].nome , email : getUser[0].contatos[0].valor})
 
-        console.log(respon);
-        
         response.status(200).json(respon);
     }
 }

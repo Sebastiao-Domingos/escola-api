@@ -1,7 +1,7 @@
 import { Administrador } from "@prisma/client";
 import { LogInData, LogInResponse, SessionRepository } from "../../Repositories/session/Session.repository";
 import jwt from "jsonwebtoken"
-const PASS_SECRET ="sebas1234escola"
+export const PASS_SECRET ="sebas1234escola"
 
 export class SessionService implements SessionRepository{
 

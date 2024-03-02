@@ -9,6 +9,11 @@ export type LogInData = {
     nome ?: string
 }
 
+export type PayLoadType = {
+    id : string,
+    nome :string
+}
+
 export type LogInResponse = {
     id : string,
     nome : string,
