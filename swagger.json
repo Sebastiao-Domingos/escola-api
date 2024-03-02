@@ -22,6 +22,11 @@
     ],
     "tags" : [
         {
+            "name" : "Sessão",
+            "description" : "Rota para fazer o login",
+            "summary" : "Rota para fazer o login"
+        },
+        {
             "name" : "Administradores",
             "description" : "rota para manipular administradores",
             "summary" : "manipular administradores!"
@@ -49,6 +54,53 @@
     ],
 
     "paths": {
+        "/sessao":{
+            "post":{
+                "tags":["Sessão"],
+                "summary":"Fazer login",
+                "description":"Fazer login",
+                "operationId":"Login",
+                "requestBody":{
+                    "description" :"Fazer login",
+                    "content":{
+                        "application/json" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/Login"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Login"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200" :{
+                        "description":"Login feito com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/LoginReponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/LoginReponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
+        },
         "/administradores":{
             "post":{
                 "tags":["Administradores"],
@@ -3181,6 +3233,43 @@
 
     "components" : {
         "schemas":{
+            "Login":{
+                "required":[
+                    "email","senha"
+                ],
+                "type" : "object",
+                "properties":{
+                    "email":{
+                        "type" : "string",
+                        "example" : "seba@gmail.com"
+                    },
+                    "senha":{
+                        "type" : "string",
+                        "example" : "12345678"
+                    }
+                }
+            },
+            "LoginReponse":{
+                "type" : "object",
+                "properties":{
+                    "id":{
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "email":{
+                        "type" : "string",
+                        "example" : "seba@gmail.com"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Sebastiao Antonio"
+                    },
+                    "token":{
+                        "type" : "string",
+                        "example" : "sadfasdafsdfasdf-asdasdgasdgasgas-dgasdgasd-gasdgasdgas-dgasgasdgasgas"
+                    }
+                }
+            },
             "Pais":{
                 "required":[
                     "nome"

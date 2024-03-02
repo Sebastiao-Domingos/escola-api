@@ -15,6 +15,7 @@ import { disciplinas_routes } from "./school/Disciplinas.routes";
 import { escolher_professor_routes } from "./school/EscolherProfessor.routes";
 import { notas_routes } from "./school/classroom/Nota.routes";
 import { administradores_routes } from "./users/Administrador.routes";
+import { session_routes } from "./session/Session.routes";
 
 const routes = express();
 
@@ -34,6 +35,7 @@ routes.use(disciplinas_routes)
 routes.use(escolher_professor_routes)
 routes.use(notas_routes)
 routes.use(administradores_routes)
+routes.use(session_routes)
 
 routes.post("/upload" , upload.single("file") , (req, res) =>{
     return res.json(req.file?.originalname)
