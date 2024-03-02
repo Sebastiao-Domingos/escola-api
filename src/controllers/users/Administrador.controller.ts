@@ -1,24 +1,26 @@
 import { Request, Response } from "express";
-import { EstudanteService } from "../../services/users/Estudante.service";
-import {ContatoType, EnderecoType, EstudanteDataCreate, EstudanteDataCreateREceived, EstudanteDataUpdate, NaturalidadeDate, NaturalidadeType, SearchParamsData } from "../../Repositories/users/Estudante.repository";
+import bcrypt from "bcrypt"
+import { ContatoType, EnderecoType, NaturalidadeType } from "../../Repositories/users/Estudante.repository";
 import { validate } from "uuid";
 import { BadRequestError } from "../../helpers/api-error";
+import {  PrismaClient } from "@prisma/client";
+import { AdministradorService } from "../../services/users/Administrador.service";
+import { AdministradorDataCreate, AdministradorDataCreateReceived, AdministradorDataUpdate, SearchAdministrador } from "../../Repositories/users/Administrador.repository";
 import { validateContato } from "../../helpers/functions/validators";
-import { PrismaClient } from "@prisma/client";
 
-const service = new EstudanteService();
+const service = new AdministradorService();
 
 const prisma = new PrismaClient();
-export class EstudanteController{
+export class AdministradorController{
     /**
      * create
      */
     public async create( request : Request, response : Response) {
-        const data : EstudanteDataCreateREceived = request.body;
+        const data : AdministradorDataCreateReceived = request.body;
         const file  = request.file as Express.Multer.File;
 
         data.foto = file 
-        const count = await prisma.estudante.count();
+        const count = await prisma.administrador.count();
         data.naturalidade.replace("\n\r","")
         data.enderecos.replace("\n\r","")
         data.contatos.replace("\n\r","")
@@ -27,14 +29,8 @@ export class EstudanteController{
         const contacts : ContatoType = JSON.parse(data.contatos)
 
         
-        if(!validate(data.turma_id) || !validate(naturality.municipio_id) || !validate(address.municipio_id)){
+        if(!validate(naturality.municipio_id) || !validate(address.municipio_id)){
             response.status(400).json( new BadRequestError("Id invalido!"))
-        }
-
-        const turma = await prisma.turma.findUnique({ where : {id : data.turma_id}}).then( res => res)
-
-        if(!turma){
-            response.status(400).json( new BadRequestError("A turma não existe!"))
         }
         
         const naturalidade = await prisma.municipio.findUnique({ where : {id : naturality.municipio_id}}).then( res =>res)
@@ -43,24 +39,26 @@ export class EstudanteController{
             response.status(400).json( new BadRequestError("A Município da  natuaralidade não existe!"))
         }
 
-
         const endrer = await prisma.municipio.findUnique({ where : {id : naturality.municipio_id}}).then( res =>res)
 
         if(!endrer){
             response.status(400).json( new BadRequestError("A Município do endereço não existe!"))
         }
 
-        const dataCreation : EstudanteDataCreate = {
+        const saltRounds = 10;
+
+        const hash = await bcrypt.hash( data.senha, saltRounds).then( res => res);
+        
+        const dataCreation :AdministradorDataCreate = {
             nome : data.nome,
-            turma_id : data.turma_id,
             data_nascimento : data.data_nascimento,
             foto : file,
+            senha : hash,
             naturalidade : naturality, 
             contatos : contacts,
             enderecos : address,
-            numero_processo : count +1
         }
-
+        
         return await service.add(dataCreation)
         .then( res => {
             return response.status(200).json(res)
@@ -75,7 +73,7 @@ export class EstudanteController{
      */
     public async update( request : Request, response : Response) {
         const id : string = request.params.id;
-        const data : EstudanteDataUpdate = request.body;
+        const data : AdministradorDataUpdate = request.body;
 
         if(!id){
             response.status(400).json( new BadRequestError("Id invalido do estudante"))
@@ -91,18 +89,6 @@ export class EstudanteController{
             response.status(400).json( new BadRequestError("Estudante não encontrado!"))
         }
 
-        if(data.turma_id){
-            if(!validate(data.turma_id)){
-                response.status(400).json( new BadRequestError("Id invalido da turma!"))
-            }else{
-                const turma = await prisma.turma.findUnique({ where : {id : data.turma_id}}).then( res => res)
-    
-                if(!turma){
-                    response.status(400).json( new BadRequestError("A turma não existe!"))
-                }
-            }
-        }
-        
         if(data.naturalidade && data.naturalidade.id){
             if(!validate(data.naturalidade.id)){
                 response.status(400).json( new BadRequestError("Id invalido da naturalidade! "))
@@ -169,7 +155,7 @@ export class EstudanteController{
      * get
      */
     public async get( request : Request , response : Response) {
-        const searchParams : Partial<SearchParamsData> = request.query;
+        const searchParams : Partial<SearchAdministrador> = request.query;
         return await service.get( searchParams )
         .then( res => {
             response.status(200).json(res)
@@ -179,83 +165,17 @@ export class EstudanteController{
         })
     }
 
-    public async getEstudantesTurma( request :Request , response : Response) {
-        const id : string = request.params.id;
-
-        if(!validate(id)){
-            response.status(400).json( new BadRequestError("Id invlido!"))
-        }
-
-        const turma = await prisma.turma.findUnique( {where: {id }}).then( res => res);
-
-        if(!turma){
-            response.status(400).json( new BadRequestError("Não existe esta turma"))
-        }
-
-        return await service.getEstudantesTurma(id)
-        .then( resp => {
-            return response.status(200).json(resp)
-        })
-        .catch( error => {
-            return response.status(400).json(error)
-        })
-    }
-
-    public async getDisciplinasEstudante( request :Request , response : Response) {
-        const id : string = request.params.id;
-
-        if(!validate(id)){
-            response.status(400).json( new BadRequestError("Id invlido!"))
-        }
-
-        const estudante = await prisma.estudante.findUnique( {where: {id }}).then( res => res);
-
-        if(!estudante){
-            response.status(400).json( new BadRequestError("Não existe este estudante"))
-        }
-
-        return await service.getDisciplinasEstudante(id)
-        .then( resp => {
-            return response.status(200).json(resp)
-        })
-        .catch( error => {
-            return response.status(400).json(error)
-        })
-    }
-
-    public async getNotasEstudante( request :Request , response : Response) {
-        const id : string = request.params.id;
-
-        if(!validate(id)){
-            response.status(400).json( new BadRequestError("Id invlido!"))
-        }
-
-        const estudante = await prisma.estudante.findUnique( {where: {id }}).then( res => res);
-
-        if(!estudante){
-            response.status(400).json( new BadRequestError("Não existe este estudante"))
-        }
-
-        return await service.getNotasEstudante(id)
-        .then( resp => {
-            return response.status(200).json(resp)
-        })
-        .catch( error => {
-            return response.status(400).json(error)
-        })
-    }
-
     /**
      * find
      */
     public async find( request :Request , response : Response) {
-        const estudante_id : string = request.params.id;
+        const admin_id : string = request.params.id;
 
-        if(!validate(estudante_id)){
+        if(!validate(admin_id)){
             response.status(400).json( new BadRequestError("Id invlido!"))
         }
 
-        return await service.find(estudante_id)
+        return await service.find(admin_id)
         .then( resp => {
             return response.status(200).json(resp)
         })
@@ -268,9 +188,9 @@ export class EstudanteController{
      * delete
      */
     public async delete( request : Request , response :Response) {
-        const estudante_id :string = request.params.id;
+        const admin_id :string = request.params.id;
         
-        return await service.delete(estudante_id)
+        return await service.delete(admin_id)
         .then( res => {
             response.status(200).json(res);
         })
@@ -279,5 +199,3 @@ export class EstudanteController{
         })
     }
 }
-
-

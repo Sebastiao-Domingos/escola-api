@@ -22,6 +22,11 @@
     ],
     "tags" : [
         {
+            "name" : "Administradores",
+            "description" : "rota para manipular administradores",
+            "summary" : "manipular administradores!"
+        },
+        {
             "name" : "País",
             "description" : "rota para manipular pais",
             "summary" : "manipular pais!"
@@ -44,6 +49,237 @@
     ],
 
     "paths": {
+        "/administradores":{
+            "post":{
+                "tags":["Administradores"],
+                "summary":"Adicionar administrador",
+                "description":"Adicionar administrador",
+                "operationId":"adicionaradministrador",
+                "requestBody":{
+                    "description" :"Criar uma administrador",
+                    "content":{
+                        "multipart/form-data" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/AdministradorCreate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Administrador"
+                            }
+                        }
+                    },
+                    "required" : true
+                },
+                "responses":{
+                    "200" :{
+                        "description":"criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Administrador"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Administrador"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "get":{
+                "tags" : ["Administradores"],
+                "description" : "rota listar todos as administradores",
+                "summary" : "listar administradores!",
+                "operationId":"listaradministrador",
+                "parameters":[
+                    {
+                        "in":"query",
+                        "name":"currentPage",
+                        "description":"pagina atual",
+                        "schema":{
+                            "type":"integer",
+                            "example":1
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"peerPage",
+                        "schema":{
+                            "type":"integer",
+                            "example":5
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"listado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/AdministradorResponse"
+                                    }
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/AdministradorResponse"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao listar estudantes"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            }
+        },
+        "/administradores/{administrador_id}":{
+            "get":{
+                "tags":["Administradores"],
+                "summary":"Pegar dos dados do administrador pelo id",
+                "description":"Pegar dos dados do administrador pelo id",
+                "operationId":"listarByIdadministrador",
+                "parameters":[
+                    {
+                        "name":"administrador_id",
+                        "in":"path",
+                        "description":"id do administrador",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/AdministradorDataResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/AdministradorDataResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            },
+            "put":{
+                "tags" : ["Administradores"],
+                "description" : "rota atualizar a administrador",
+                "summary" : "atualizar a administrador",
+                "operationId":"atualizaradministrador",
+                "parameters":[
+                    {
+                        "name":"administrador_id",
+                        "in":"path",
+                        "description":"Id do administrador",
+                        "required" : true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "description" :"Atualizar  administrador",
+                    "content":{
+                        "multipart/form-data" :{
+                            "schema" : {
+                                "$ref":"#/components/schemas/AdministradorUpdate"
+                            }
+                        },
+                        "application/hml":{
+                            "schema":{
+                                "$ref":"#/components/schemas/AdministradorUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"atualizado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Administrador"
+                                }
+                            },
+                            "application/hml":{
+                                "$ref":"#/components/schemas/Administrador"
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Falha ao atualizar"
+                    },
+                    "401":{
+                        "description":"Unauthorized"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Administradores"],
+                "summary":"Eliminar a administrador pelo id",
+                "description":"Eliminar a administrador pelo id",
+                "operationId":"eliminarByIdadministrador",
+                "parameters":[
+                    {
+                        "name":"administrador_id",
+                        "in":"path",
+                        "description":"id da administrador",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"Eliminado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Eliminado"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/Eliminado"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Nome invalido"
+                    },
+                    "422":{
+                        "description":"excepção de validação"
+                    }
+                }
+            }
+        },
         "/paises":{
             "post":{
                 "tags":["País"],
@@ -3665,6 +3901,245 @@
                 },
                 "xml" : {
                     "name": "País"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "Administrador":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Luanda"
+                    },
+                    "data_nascimento":{
+                        "type" : "Date",
+                        "example" : "2024-02-17T13:35:33.795Z"
+                    },
+                    "contatos" :{
+                        "type":"array",
+                        "items" : {
+                            "$ref":"#/components/schemas/Contato"
+                        }
+                    }
+                    ,
+                    "createdAt":{
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } ,
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    } 
+                },
+                "xml" : {
+                    "nome": "Luanda",
+                    "provincia_id":"c2d21545-c4f2-4f32-befc-245d41db94cb"
+                },
+                "ApiResponse" :{
+                    "type" : "object",
+                    "properties":{
+                        "code" :{
+                            "type" : "integer",
+                            "format":"int32"
+                        },
+                        "type" :{
+                            "type":"string"
+                        },
+                        "messagem":{
+                            "type":"string"
+                        }
+                    },
+                    "xml":{
+                        "name" :"##default"
+                    }
+                }
+            },
+            "AdministradorCreate":{
+                "required":[
+                    "nome",
+                    "senha",
+                    "data_nascimento",
+                    "naturalidade",
+                    "contatos",
+                    "enderecos"
+                ],
+                "type" : "object",
+                "properties":{
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Sebastiao Antonio"
+                    },
+                    "senha" : {
+                        "type" : "string",
+                        "example":"12345678"
+                    },
+                    "data_nascimento" : {
+                        "type" : "Date",
+                        "example" :"2024-02-17T13:35:33.795Z"
+                    },
+                    "foto" :{
+                        "type":"file"
+                    },
+                    "contatos":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/ContatoCreate"
+                    },
+                    "naturalidade":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/NaturalidadeCreate"
+                    },
+                    "enderecos":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/EnderecoCreate"
+                    }
+                },
+                "xml" : {
+                    "$ref" : "#/components/schemas/AdministradorCreate"
+                }
+            },
+            "AdministradorUpdate":{
+                "required":[
+                    "id"
+                ],
+                "type" : "object",
+                "properties":{
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Sebastiao Antonio"
+                    },
+                    "data_nascimento" : {
+                        "type" : "Date",
+                        "example" :"2024-02-17T13:35:33.795Z"
+                    },
+                    "foto":{
+                        "type":"file"
+                    },
+                    "contatos":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/ContatoCreate"
+                    },
+                    "naturalidade":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/NaturalidadeCreate"
+                    },
+                    "enderecos":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/EnderecoCreate"
+                    }
+                },
+                "xml" : {
+                    "$ref":"#/components/schemas/AdministradorUpdate"
+                }
+            },
+            "AdministradorResponse":{
+                "type" : "object",
+                "properties":{
+                    "estudantes":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Administrador"
+                        }
+                    },
+                    "perPage":{
+                        "type":"integer",
+                        "example":4
+                    },
+                    "previousPage":{
+                        "type":"integer",
+                        "example":1
+                    },
+                    "currentPage": {
+                        "type":"integer",
+                        "example":1
+                    },
+                    "nextPage":{
+                        "type":"integer",
+                        "example":1
+                    },
+                    "lastPage": {
+                        "type":"integer",
+                        "example":4
+                    },
+                    "total": {
+                        "type":"integer",
+                        "example":7
+                    }
+                },
+                "xml" : {
+                    "$ref" :"#/components/schemas/AdministradorResponse"
+                }
+            },
+            "AdministradorDataResponse":{
+                "type" : "object",
+                "properties":{
+                    "id" : {
+                        "type" : "string",
+                        "example" : "c2d21545-c4f2-4f32-befc-245d41db94cb"
+                    },
+                    "nome":{
+                        "type" : "string",
+                        "example" : "Sebastiao Antonio"
+                    },
+                    "data_nascimento" : {
+                        "type" : "Date",
+                        "example" :"2024-02-17T13:35:33.795Z"
+                    },
+                    "contatos":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Contato"
+                        }
+                    },
+                    "naturalidade":{
+                        "type":"object",
+                        "$ref":"#/components/schemas/Naturalidade"
+                    },
+                    "enderecos":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/Endereco"
+                        }
+                    },
+                    "turma":{
+                        "type" : "object",
+                        "$ref" :"#/components/schemas/TurmaEstudanteResponse"
+                    },
+                    "foto":{
+                        "type" : "object",
+                        "$ref" :"#/components/schemas/Imagem"
+                    },
+                    "createdAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    },
+                    "updatedAt": {
+                        "type":"Date",
+                        "example":"2024-02-17T13:35:33.795Z"
+                    }
+                },
+                "xml" : {
+                    "$ref" : "#/components/schemas/AdministradorDataResponse"
                 },
                 "ApiResponse" :{
                     "type" : "object",

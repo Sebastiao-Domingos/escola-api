@@ -15,9 +15,13 @@ datasource db {
 
 model Administrador {
   id    String   @unique @default(uuid())
-  email String  @unique
   nome  String
   senha String 
+  data_nascimento DateTime
+  naturalidade Naturalidade?
+  foto Imagens?
+  endereco Endereco[]
+  contatos Contato[]
   createAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
 }
@@ -61,6 +65,8 @@ model Endereco {
   ponto_de_referencia String
   estudante_id String? @db.VarChar(36)
   professor_id String? @db.VarChar(36)
+  administrador_id String? @db.VarChar(36)
+  administrador Administrador? @relation(fields: [administrador_id] , references: [id] , onDelete: Cascade ,onUpdate: Cascade)
   municipio Municipio @relation(fields: [municipio_id] , references: [id], onDelete: Cascade , onUpdate: Cascade)
   estudante Estudante? @relation(fields: [estudante_id],references: [id] , onDelete:  Cascade , onUpdate: Cascade)
   professor Professor? @relation(fields: [professor_id] , references: [id] ,onDelete: Cascade ,onUpdate: Cascade)
@@ -91,6 +97,8 @@ model Naturalidade {
   estudante_id String? @unique @db.VarChar(36)
   professor Professor? @relation(fields: [professor_id] , references: [id])
   professor_id String? @unique @db.VarChar(36)
+  administrador_id String? @db.VarChar(36) @unique
+  administrador Administrador? @relation(fields: [administrador_id] , references: [id] , onDelete: Cascade ,onUpdate: Cascade)
   createdAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
 }
@@ -103,6 +111,8 @@ model Contato {
   estudante Estudante? @relation(fields: [estudante_id] , references: [id], onDelete: Cascade , onUpdate:  Cascade)
   professor_id String? @db.VarChar(36)
   professor Professor? @relation(fields: [professor_id ], references: [id], onDelete: Cascade , onUpdate:  Cascade)
+  administrador_id String? @db.VarChar(36)
+  administrador Administrador? @relation(fields: [administrador_id] , references: [id] , onDelete: Cascade ,onUpdate: Cascade)
   createdAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
 }
@@ -196,6 +206,8 @@ model Imagens {
   professor_id String? @unique @db.VarChar(36)
   estudante Estudante? @relation(fields: [estudante_id] , references: [id])
   professor Professor? @relation(fields: [professor_id] , references: [id])
+  administrador_id String? @db.VarChar(36) @unique
+  administrador Administrador? @relation(fields: [administrador_id] , references: [id] , onDelete: Cascade ,onUpdate: Cascade)
   createdAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
 }

@@ -37,7 +37,6 @@ export class DisciplinaService implements DisciplinaRepository{
         const previousPage = (currentPage>1) ? currentPage-1  :null
         const jump = (currentPage-1)*perPage;
 
-
         if( professor_id || turma_id ){
             return await prisma.disciplina.findMany({
                 skip : jump,
