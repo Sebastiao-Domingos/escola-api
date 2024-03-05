@@ -19,7 +19,7 @@
             "url" : "http://localhost:3333",
             "description":"url base para manipular uma escola"
         }
-    ],
+    ],  
     "tags" : [
         {
             "name" : "Sessão",
@@ -95,8 +95,8 @@
                     "400":{
                         "description":"Nome invalido"
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401" :{
+                        "description" :"Não autorizado"
                     }
                 }
             }
@@ -106,6 +106,11 @@
                 "tags":["Administradores"],
                 "summary":"Adicionar administrador",
                 "description":"Adicionar administrador",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"adicionaradministrador",
                 "requestBody":{
                     "description" :"Criar uma administrador",
@@ -140,10 +145,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -151,6 +190,11 @@
                 "tags" : ["Administradores"],
                 "description" : "rota listar todos as administradores",
                 "summary" : "listar administradores!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listaradministrador",
                 "parameters":[
                     {
@@ -189,10 +233,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar estudantes"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -202,6 +280,11 @@
                 "tags":["Administradores"],
                 "summary":"Pegar dos dados do administrador pelo id",
                 "description":"Pegar dos dados do administrador pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIdadministrador",
                 "parameters":[
                     {
@@ -231,10 +314,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -242,6 +359,11 @@
                 "tags" : ["Administradores"],
                 "description" : "rota atualizar a administrador",
                 "summary" : "atualizar a administrador",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"atualizaradministrador",
                 "parameters":[
                     {
@@ -284,10 +406,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao atualizar"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -295,6 +451,11 @@
                 "tags":["Administradores"],
                 "summary":"Eliminar a administrador pelo id",
                 "description":"Eliminar a administrador pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"eliminarByIdadministrador",
                 "parameters":[
                     {
@@ -324,10 +485,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -337,6 +532,11 @@
                 "tags":["País"],
                 "summary":"Adicionar um pais",
                 "description":"Adicionar um novo pais",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"adicionarPais",
                 "requestBody":{
                     "description" :"Criar um novo pais",
@@ -371,10 +571,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -382,6 +616,11 @@
                 "tags" : ["País"],
                 "description" : "rota listar todos os países",
                 "summary" : "listar paises!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarPais",
                 "responses":{
                     "200":{
@@ -400,11 +639,45 @@
                             }
                         }
                     },
-                    "400":{
-                        "description":"Falha ao listar pais"
+                   "400":{
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -414,6 +687,11 @@
                 "tags":["País"],
                 "summary":"Pegar dos dados do pais pelo id",
                 "description":"Pegar dos dados do pais pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIdPais",
                 "parameters":[
                     {
@@ -443,10 +721,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -454,6 +766,11 @@
                 "tags" : ["País"],
                 "description" : "rota atualizar o pais",
                 "summary" : "atualizar o pais!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"atualizarPais",
                 "parameters":[
                     {
@@ -501,11 +818,45 @@
                             }
                         }
                     },
-                    "400":{
-                        "description":"Falha ao listar pais"
+                   "400":{
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -513,6 +864,11 @@
                 "tags":["País"],
                 "summary":"Eliminar o pais pelo id",
                 "description":"Eliminar o pais pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"eliminarByIdPais",
                 "parameters":[
                     {
@@ -542,10 +898,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -555,6 +945,11 @@
                 "tags":["Província"],
                 "summary":"Adicionar província",
                 "description":"Adicionar província",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"adicionarProvincia",
                 "requestBody":{
                     "description" :"Criar uma província",
@@ -589,10 +984,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -600,6 +1029,11 @@
                 "tags" : ["Província"],
                 "description" : "rota listar todos as províncias",
                 "summary" : "listar paises!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarProvincia",
                 "parameters":[
                     {
@@ -647,10 +1081,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar provincias"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -660,6 +1128,11 @@
                 "tags":["Província"],
                 "summary":"Pegar dos dados do provincia pelo id",
                 "description":"Pegar dos dados do provincia pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIdProvincia",
                 "parameters":[
                     {
@@ -689,10 +1162,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -700,6 +1207,11 @@
                 "tags" : ["Província"],
                 "description" : "rota atualizar a província",
                 "summary" : "atualizar a província!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"atualizarProvincia",
                 "parameters":[
                     {
@@ -748,10 +1260,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar províncias"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -759,6 +1305,11 @@
                 "tags":["Província"],
                 "summary":"Eliminar a província pelo id",
                 "description":"Eliminar a província pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"eliminarByIdProvincia",
                 "parameters":[
                     {
@@ -788,10 +1339,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -801,6 +1386,11 @@
                 "tags":["Município"],
                 "summary":"Adicionar município",
                 "description":"Adicionar município",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"adicionarMunicipio",
                 "requestBody":{
                     "description" :"Criar uma município",
@@ -835,10 +1425,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -846,6 +1470,11 @@
                 "tags" : ["Município"],
                 "description" : "rota listar todos as municípios",
                 "summary" : "listar municípios!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarMunicipio",
                 "parameters":[
                     {
@@ -920,10 +1549,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar municípios"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -933,6 +1596,11 @@
                 "tags":["Município"],
                 "summary":"Pegar dos dados do município pelo id",
                 "description":"Pegar dos dados do município pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIdMunicipio",
                 "parameters":[
                     {
@@ -962,10 +1630,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -973,6 +1675,11 @@
                 "tags" : ["Município"],
                 "description" : "rota atualizar a município",
                 "summary" : "atualizar a município",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"atualizarMunicipio",
                 "parameters":[
                     {
@@ -1021,10 +1728,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao atualizar município"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -1032,6 +1773,11 @@
                 "tags":["Município"],
                 "summary":"Eliminar a município pelo id",
                 "description":"Eliminar a município pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"eliminarByIdMunicipio",
                 "parameters":[
                     {
@@ -1061,10 +1807,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1074,6 +1854,11 @@
                 "tags":["Departamento"],
                 "summary":"Adicionar Departamento",
                 "description":"Adicionar Departamento",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"adicionarDepartamento",
                 "requestBody":{
                     "description" :"Criar departamento",
@@ -1108,10 +1893,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -1119,6 +1938,11 @@
                 "tags" : ["Departamento"],
                 "description" : "rota listar todas Departamentos",
                 "summary" : "listar Departamentos",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarDepartamento",
                 "responses":{
                     "200":{
@@ -1138,10 +1962,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1151,6 +2009,11 @@
                 "tags":["Departamento"],
                 "summary":"Pegar dos dados do Departamento pelo id",
                 "description":"Pegar dos dados do Departamento pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIdDepartamento",
                 "parameters":[
                     {
@@ -1180,10 +2043,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -1191,6 +2088,11 @@
                 "tags":["Departamento"],
                 "description" : "rota atualizar o Departamento",
                 "summary" : "atualizar o Departamento!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"atualizarDepartamento",
                 "parameters":[
                     {
@@ -1234,10 +2136,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar departamento"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -1245,6 +2181,11 @@
                 "tags":["Departamento"],
                 "summary":"Eliminar o Departamento pelo id",
                 "description":"Eliminar o Departamento pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"eliminarByIdDepartamento",
                 "parameters":[
                     {
@@ -1274,10 +2215,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1287,6 +2262,11 @@
                 "tags":["Ano Académico"],
                 "summary":"Adicionar um ano academíco",
                 "description":"Adicionar um novo ano academíco",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"adicionarAno",
                 "requestBody":{
                     "description" :"Criar um novo ano academíco",
@@ -1321,10 +2301,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -1332,6 +2346,11 @@
                 "tags" : ["Ano Académico"],
                 "description" : "rota listar todos os anos académicos",
                 "summary" : "listar anos academicos!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarAno",
                 "responses":{
                     "200":{
@@ -1351,10 +2370,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1364,6 +2417,11 @@
                 "tags":["Ano Académico"],
                 "summary":"Pegar dos dados do ano académico pelo id",
                 "description":"Pegar dos dados do ano académico pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIdAno",
                 "parameters":[
                     {
@@ -1393,10 +2451,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -1404,6 +2496,11 @@
                 "tags" : ["Ano Académico"],
                 "description" : "rota atualizar o ano académico",
                 "summary" : "atualizar o ano académico!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"atualizarAno",
                 "parameters":[
                     {
@@ -1451,11 +2548,45 @@
                             }
                         }
                     },
-                    "400":{
-                        "description":"Falha ao listar pais"
+                   "400":{
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -1463,6 +2594,11 @@
                 "tags":["Ano Académico"],
                 "summary":"Eliminar o ano académico pelo id",
                 "description":"Eliminar o ano académico pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"eliminarByIdAno",
                 "parameters":[
                     {
@@ -1492,10 +2628,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1505,6 +2675,11 @@
                 "tags":["Turma"],
                 "summary":"Adicionar turma",
                 "description":"Adicionar turma",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"adicionarTurma",
                 "requestBody":{
                     "description" :"Criar turma",
@@ -1539,10 +2714,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -1550,6 +2759,11 @@
                 "tags" : ["Turma"],
                 "description" : "rota listar todas turmas",
                 "summary" : "listar turmas",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarTurma",
                 "responses":{
                     "200":{
@@ -1569,10 +2783,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1582,6 +2830,11 @@
                 "tags":["Turma"],
                 "summary":"Pegar dos dados do turma pelo id",
                 "description":"Pegar dos dados do turma pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIdTurma",
                 "parameters":[
                     {
@@ -1611,10 +2864,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -1622,6 +2909,11 @@
                 "tags" : ["Turma"],
                 "description" : "rota atualizar o turma",
                 "summary" : "atualizar o turma!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"atualizarTurma",
                 "parameters":[
                     {
@@ -1669,11 +2961,45 @@
                             }
                         }
                     },
-                    "400":{
-                        "description":"Falha ao listar pais"
+                   "400":{
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -1681,6 +3007,11 @@
                 "tags":["Turma"],
                 "summary":"Eliminar o turma pelo id",
                 "description":"Eliminar o turma pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"eliminarByIdTurma",
                 "parameters":[
                     {
@@ -1710,10 +3041,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1723,6 +3088,11 @@
                 "tags":["Estudante"],
                 "summary":"Adicionar estudante",
                 "description":"Adicionar estudante",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"adicionarEstudante",
                 "requestBody":{
                     "description" :"Criar uma estudante",
@@ -1757,10 +3127,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -1768,6 +3172,11 @@
                 "tags" : ["Estudante"],
                 "description" : "rota listar todos as estudantes",
                 "summary" : "listar estudantes!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarEstudante",
                 "parameters":[
                     {
@@ -1840,10 +3249,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar estudantes"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1853,6 +3296,11 @@
                 "tags":["Estudante"],
                 "summary":"Pegar estudantes da turma",
                 "description":"Pegar estudantes da turma",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIdEstudanteTurma",
                 "parameters":[
                     {
@@ -1882,10 +3330,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1895,6 +3377,11 @@
                 "tags":["Estudante"],
                 "summary":"Pegar disciplinas do estudante",
                 "description":"Pegar disciplinas do estudante",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIdDisciplinasEstudante",
                 "parameters":[
                     {
@@ -1927,10 +3414,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1940,6 +3461,11 @@
                 "tags":["Estudante"],
                 "summary":"Pegar dos dados do estudante pelo id",
                 "description":"Pegar dos dados do estudante pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIdEstudante",
                 "parameters":[
                     {
@@ -1969,10 +3495,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -1980,6 +3540,11 @@
                 "tags" : ["Estudante"],
                 "description" : "rota atualizar a estudante",
                 "summary" : "atualizar a estudante",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"atualizarEstudante",
                 "parameters":[
                     {
@@ -2028,10 +3593,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao atualizar município"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -2039,6 +3638,11 @@
                 "tags":["Estudante"],
                 "summary":"Eliminar a estudante pelo id",
                 "description":"Eliminar a estudante pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"eliminarByIdEstudante",
                 "parameters":[
                     {
@@ -2068,10 +3672,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2081,6 +3719,11 @@
                 "tags":["Notas"],
                 "summary":"Adicionar notas",
                 "description":"Adicionar notas",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"adicionarnotas",
                 "requestBody":{
                     "description" :"Criar uma notas",
@@ -2115,10 +3758,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -2126,6 +3803,11 @@
                 "tags" : ["Notas"],
                 "description" : "rota listar todos as notas",
                 "summary" : "listar notas!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarNotas",
                 "responses":{
                     "200":{
@@ -2145,10 +3827,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar notas"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2158,6 +3874,11 @@
                 "tags":["Professor"],
                 "summary":"Adicionar professor",
                 "description":"Adicionar professor",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"adicionarprofessor",
                 "requestBody":{
                     "description" :"Criar uma professor",
@@ -2192,10 +3913,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -2203,6 +3958,11 @@
                 "tags" : ["Professor"],
                 "description" : "rota listar todos as professores",
                 "summary" : "listar professores!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarprofessor",
                 "parameters":[
                     {
@@ -2273,10 +4033,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar professores"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2286,6 +4080,11 @@
                 "tags":["Professor"],
                 "summary":"Pegar professores da turma",
                 "description":"Pegar professores da turma",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIdprofessorTurma",
                 "parameters":[
                     {
@@ -2315,10 +4114,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2328,6 +4161,11 @@
                 "tags":["Professor"],
                 "summary":"Pegar dos dados do professor pelo id",
                 "description":"Pegar dos dados do professor pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIdprofessor",
                 "parameters":[
                     {
@@ -2357,10 +4195,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -2368,6 +4240,11 @@
                 "tags" : ["Professor"],
                 "description" : "rota atualizar a professor",
                 "summary" : "atualizar a professor",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"atualizarprofessor",
                 "parameters":[
                     {
@@ -2416,10 +4293,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao atualizar município"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -2427,6 +4338,11 @@
                 "tags":["Professor"],
                 "summary":"Eliminar a professor pelo id",
                 "description":"Eliminar a professor pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"eliminarByIdprofessor",
                 "parameters":[
                     {
@@ -2456,10 +4372,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2469,6 +4419,11 @@
                 "tags":["Curso"],
                 "summary":"Adicionar um curso",
                 "description":"Adicionar um novo curso",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"adicionarCurso",
                 "requestBody":{
                     "description" :"Criar um novo curso",
@@ -2503,10 +4458,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -2514,6 +4503,11 @@
                 "tags" : ["Curso"],
                 "description" : "listar cursos",
                 "summary" : "listar cursos",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarCurso",
                 "responses":{
                     "200":{
@@ -2532,11 +4526,45 @@
                             }
                         }
                     },
-                    "400":{
-                        "description":"Falha ao listar pais"
+                   "400":{
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2546,6 +4574,11 @@
                 "tags":["Curso"],
                 "summary":"Pegar dos dados do curso pelo id",
                 "description":"Pegar dos dados do curso pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIdCurso",
                 "parameters":[
                     {
@@ -2575,10 +4608,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -2586,6 +4653,11 @@
                 "tags" : ["Curso"],
                 "description" : "rota atualizar o curso",
                 "summary" : "atualizar o curso!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"atualizarcurso",
                 "parameters":[
                     {
@@ -2634,10 +4706,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -2645,6 +4751,11 @@
                 "tags":["Curso"],
                 "summary":"Eliminar o curso pelo id",
                 "description":"Eliminar o curso pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"eliminarByIdcurso",
                 "parameters":[
                     {
@@ -2674,10 +4785,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2687,6 +4832,11 @@
                 "tags":["Disciplinas"],
                 "summary":"Adicionar  Disciplina",
                 "description":"Adicionar  Disciplina",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"adicionarDisciplina",
                 "requestBody":{
                     "description" :"Criar Disciplina",
@@ -2721,10 +4871,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -2732,6 +4916,11 @@
                 "tags" : ["Disciplinas"],
                 "description" : "listar Disciplinas",
                 "summary" : "listar Disciplinas",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarDisciplina",
                 "parameters":[
                     {
@@ -2792,10 +4981,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2805,6 +5028,11 @@
                 "tags":["Disciplinas"],
                 "summary":"Pegar disciplinas da turma",
                 "description":"Pegar disciplinas da turma",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIdDisciplinaTurma",
                 "parameters":[
                     {
@@ -2834,10 +5062,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2847,6 +5109,11 @@
                 "tags":["Disciplinas"],
                 "summary":"Pegar dos dados do disciplina pelo id",
                 "description":"Pegar dos dados do disciplina pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIddisciplina",
                 "parameters":[
                     {
@@ -2876,10 +5143,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -2887,6 +5188,11 @@
                 "tags" : ["Disciplinas"],
                 "description" : "rota atualizar o disciplina",
                 "summary" : "atualizar o disciplina!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"atualizardisciplina",
                 "parameters":[
                     {
@@ -2935,10 +5241,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -2946,6 +5286,11 @@
                 "tags":["Disciplinas"],
                 "summary":"Eliminar o disciplina pelo id",
                 "description":"Eliminar o disciplina pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"eliminarByIddisciplina",
                 "parameters":[
                     {
@@ -2975,10 +5320,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2988,6 +5367,11 @@
                 "tags":["Selecionar Professor"],
                 "summary":"Adicionar  Selecionar Professor",
                 "description":"Adicionar  Selecionar Professor",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"adicionarSelecionarProfessor",
                 "requestBody":{
                     "description" :"Criar SelecionarProfessor",
@@ -3022,10 +5406,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -3033,6 +5451,11 @@
                 "tags" : ["Selecionar Professor"],
                 "description" : "listar Selecionar professor",
                 "summary" : "listar selecionar professor",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarSelecionarProfessor",
                 "parameters":[
                     {
@@ -3085,10 +5508,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -3098,6 +5555,11 @@
                 "tags":["Selecionar Professor"],
                 "summary":"Pegar dos dados do disciplina pelo id",
                 "description":"Pegar dos dados do disciplina pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"listarByIddisciplina",
                 "parameters":[
                     {
@@ -3127,10 +5589,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -3138,6 +5634,11 @@
                 "tags" : ["Selecionar Professor"],
                 "description" : "rota atualizar o disciplina",
                 "summary" : "atualizar o disciplina!",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"atualizardisciplina",
                 "parameters":[
                     {
@@ -3186,10 +5687,44 @@
                         }
                     },
                     "400":{
-                        "description":"Falha ao listar"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
                     "401":{
-                        "description":"Unauthorized"
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -3197,6 +5732,11 @@
                 "tags":["Selecionar Professor"],
                 "summary":"Eliminar oselecionarProfessor pelo id",
                 "description":"Eliminar oselecionarProfessor pelo id",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
                 "operationId":"eliminarByIdselecionarProfessor",
                 "parameters":[
                     {
@@ -3221,10 +5761,44 @@
                         }
                     },
                     "400":{
-                        "description":"Nome invalido"
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
                     },
-                    "422":{
-                        "description":"excepção de validação"
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -5859,9 +8433,6 @@
                         "example" : "Eliminado com sucesso!"
                     }
                 },
-                "xml" : {
-                    "name": "País"
-                },
                 "ApiResponse" :{
                     "type" : "object",
                     "properties":{
@@ -5878,6 +8449,58 @@
                     },
                     "xml":{
                         "name" :"##default"
+                    }
+                }
+            },
+            "Erro400":{
+                "type" : "object",
+                "properties":{
+                    "status":{
+                        "type" : "integer",
+                        "example" : 400
+                    },
+                    "messageError":{
+                        "type" : "string",
+                        "example" : "Mal requissão"
+                    }
+                }
+            },
+            "Erro401":{
+                "type" : "object",
+                "properties":{
+                    "status":{
+                        "type" : "integer",
+                        "example" : 401
+                    },
+                    "messageError":{
+                        "type" : "string",
+                        "example" : "Não autorizado!"
+                    }
+                }
+            },
+            "Erro404":{
+                "type" : "object",
+                "properties":{
+                    "status":{
+                        "type" : "integer",
+                        "example" : 401
+                    },
+                    "messageError":{
+                        "type" : "string",
+                        "example" : "Não encontrado"
+                    }
+                }
+            },
+            "Erro500":{
+                "type" : "object",
+                "properties":{
+                    "status":{
+                        "type" : "integer",
+                        "example" : 500
+                    },
+                    "messageError":{
+                        "type" : "string",
+                        "example" : "Erro interno!"
                     }
                 }
             }
@@ -5927,6 +8550,14 @@
                         }
                     }
                 }
+            }
+        },
+        "securitySchemes" : {
+            "bearerAuth" : {
+                "type" : "http",
+                "description" :"JWT Autorization header using the Bearer scheme",
+                "scheme" : "bearer",
+                "bearerFormat" :"JWT"
             }
         }
     }
