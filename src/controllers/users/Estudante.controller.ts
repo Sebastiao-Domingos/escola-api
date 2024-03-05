@@ -208,10 +208,10 @@ export class EstudanteController{
             response.status(400).json( new BadRequestError("Id invlido!"))
         }
 
-        const estudante = await prisma.estudante.findUnique( {where: {id }}).then( res => res);
+        const turma = await prisma.turma.findUnique( {where: {id }}).then( res => res);
 
-        if(!estudante){
-            response.status(400).json( new BadRequestError("Não existe este estudante"))
+        if(!turma){
+            response.status(400).json( new BadRequestError("Não existe esta turma"))
         }
 
         return await service.getDisciplinasEstudante(id)

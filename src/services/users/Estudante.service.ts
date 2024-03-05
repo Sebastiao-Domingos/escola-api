@@ -173,24 +173,26 @@ export class EstudanteService implements EstudanteRepository{
                 estudante : {
                     id : estudante_id
                 }
+            },
+            include : {
+                disciplina : true
             }
         }).then( response =>response)
         .catch( error => error);
     }
     
-    public async getDisciplinasEstudante (estudante_id: string) : Promise<Disciplina[]>{
+    public async getDisciplinasEstudante (turma_id: string) : Promise<Disciplina[]>{
         return await prisma.disciplina.findMany({
             where : {
-                notas: {
+                turma_professor : {
                     some : {
-                        estudante_id
+                        turma_id
                     }
                 }
             }
         }).then( response =>response)
         .catch( error => error);
     }
-    
     
     public async delete (estudante_id: string):Promise<DeleteSms>{
         return await prisma.estudante.delete( {

@@ -3,7 +3,7 @@ import { BadRequestError, NotfoundError } from "../../helpers/api-error";
 import { PrismaClient } from "@prisma/client";
 import { validate } from "uuid";
 import { TurmaService } from "../../services/scholl/Turma.service";
-import { TurmaCreateData } from "../../Repositories/school/Turma.repositories";
+import { SearchParamsData, TurmaCreateData } from "../../Repositories/school/Turma.repositories";
 
 const service = new TurmaService()
 const prisma = new PrismaClient()
@@ -144,6 +144,24 @@ export default class TurmaController{
             response.status(400).json( new NotfoundError( error))
         })
     }
+
+    public async getEstudantes( request : Request , response : Response) {
+        const id : string = request.params.id;
+        const searchParams : Partial<SearchParamsData> = request.query;
+
+        if(!validate(id)){
+            response.status(400).json( new BadRequestError("Id da turma invalida"))
+        }
+
+        return await service.getEstudantes( id,searchParams )
+        .then( res => {
+            response.status(200).json(res)
+        })
+        .catch(error => {
+            response.status(400).json({sms : "Erro" , error : error})
+        })
+    }
+
 
     /**
      * find

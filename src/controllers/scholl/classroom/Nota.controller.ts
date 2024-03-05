@@ -53,6 +53,17 @@ export default class NotaController{
             response.status(400).json( new BadRequestError("Disciplina invalido"))
         }
 
+        const notas = await prisma.nota.findMany({
+            where : {
+                disciplina_id : disciplina?.id,
+                estudante_id : estudante?.id
+            }
+        }).then( res => res);
+
+        if(notas.length){
+            response.status(400).json( new BadRequestError(`O estudante ${estudante?.nome} já tem ${notas[0].valor} em ${disciplina?.nome}`))
+        }
+
         await service.add(data)
         .then( res => {
             return response.status(200).json(res)

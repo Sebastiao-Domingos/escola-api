@@ -2825,6 +2825,136 @@
                 }
             }
         },
+        "/turmas/{turma_id}/estudantes":{
+            "get":{
+                "tags":["Turma"],
+                "summary":"Pegar estudantes da turma",
+                "description":"Pegar estudantes da turma",
+                "security":[
+                    {
+                        "bearerAuth" :[]
+                    }
+                ],
+                "operationId":"listarByIdEstudanteTurma",
+                "parameters":[
+                    {
+                        "name":"turma_id",
+                        "in":"path",
+                        "description":"id da turma",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"municipio_id",
+                        "description":"Id do município",
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"distrito",
+                        "description":"Nome doistrito",
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"bairro",
+                        "description":"Nome do bairro",
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"rua",
+                        "description":"Nome da rua",
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"currentPage",
+                        "description":"pagina atual",
+                        "schema":{
+                            "type":"integer",
+                            "example":1
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"perPage",
+                        "schema":{
+                            "type":"integer",
+                            "example":5
+                        }
+                    }
+                ],
+                "responses":{
+                    "200" :{
+                        "description":"sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/EstudanteResponse"
+                                }
+                            },
+                            "application/hml":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/EstudanteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Erro na requissão",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro400"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"Não autorizado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro401"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Não encontrado",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro404"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"Erro no servidor",
+                        "content" :{
+                            "application/json":{
+                                "schema" :{
+                                    "$ref" :"#/components/schemas/Erro500"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/turmas/{turma_id}":{
             "get":{
                 "tags":["Turma"],
@@ -3291,22 +3421,22 @@
                 }
             }
         },
-        "/estudantes/turma/{turma_id}":{
+        "/estudantes/{turma_id}/disciplinas":{
             "get":{
                 "tags":["Estudante"],
-                "summary":"Pegar estudantes da turma",
-                "description":"Pegar estudantes da turma",
+                "summary":"Pegar disciplinas do estudante",
+                "description":"Pegar disciplinas do estudante",
                 "security":[
                     {
                         "bearerAuth" :[]
                     }
                 ],
-                "operationId":"listarByIdEstudanteTurma",
+                "operationId":"listarByIdDisciplinasEstudante",
                 "parameters":[
                     {
                         "name":"turma_id",
                         "in":"path",
-                        "description":"id da turma",
+                        "description":"id do estudante",
                         "required":true,
                         "schema":{
                             "type":"string"
@@ -3319,7 +3449,10 @@
                         "content":{
                             "application/json":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/EstudanteResponse"
+                                    "type" : "array",
+                                    "items" : {
+                                        "$ref":"#/components/schemas/Disciplina"
+                                    }
                                 }
                             },
                             "application/hml":{
@@ -3372,17 +3505,17 @@
                 }
             }
         },
-        "/estudantes/disciplinas/{estudante_id}":{
+        "/estudantes/{estudante_id}/notas":{
             "get":{
                 "tags":["Estudante"],
-                "summary":"Pegar disciplinas do estudante",
-                "description":"Pegar disciplinas do estudante",
+                "summary":"Pegar notas do estudante",
+                "description":"Pegar notas do estudante",
                 "security":[
                     {
                         "bearerAuth" :[]
                     }
                 ],
-                "operationId":"listarByIdDisciplinasEstudante",
+                "operationId":"listarByIdnotasEstudante",
                 "parameters":[
                     {
                         "name":"estudante_id",
@@ -3402,7 +3535,7 @@
                                 "schema":{
                                     "type" : "array",
                                     "items" : {
-                                        "$ref":"#/components/schemas/Disciplina"
+                                        "$ref":"#/components/schemas/Nota"
                                     }
                                 }
                             },

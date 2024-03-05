@@ -35,7 +35,8 @@ export async function authMiddleware ( request : Request , response : Response, 
         const user = {
             id : admin?.id,
             nome : admin?.nome,
-            email : admin?.contatos[0].valor
+            email : admin?.contatos[0].valor,
+            tipo : admin?.tipo
         }
 
         request.user = user;

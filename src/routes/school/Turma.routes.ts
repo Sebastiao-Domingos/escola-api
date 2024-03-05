@@ -10,6 +10,7 @@ const BASE_PATH = "/turmas"
 turma_routes.post(BASE_PATH , controller.create)
 turma_routes.get(BASE_PATH , controller.get)
 turma_routes.get( `${BASE_PATH}/:id`, controller.find)
+turma_routes.get( `${BASE_PATH}/:id/estudantes`, controller.getEstudantes)
 turma_routes.put( `${BASE_PATH}/:id`, controller.update)
 turma_routes.delete( `${BASE_PATH}/:id`, controller.delete)
 
